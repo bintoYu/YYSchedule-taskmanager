@@ -18,6 +18,7 @@ import com.YYSchedule.common.mybatis.pojo.MissionBasic;
 import com.YYSchedule.common.mybatis.pojo.MissionJob;
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
 import com.YYSchedule.common.mybatis.pojo.TaskFile;
+import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
 import com.YYSchedule.common.mybatis.pojo.UserBasic;
 import com.YYSchedule.common.pojo.NodeItem;
 import com.YYSchedule.common.pojo.Task;
@@ -40,6 +41,7 @@ import com.YYSchedule.store.service.MissionBasicService;
 import com.YYSchedule.store.service.MissionJobService;
 import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskFileService;
+import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.store.service.UserBasicService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.JobMapper;
@@ -88,6 +90,7 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		JobStatusService jobStatusService = applicationContext.getBean(JobStatusService.class);
 		MissionJobService missionJobService = applicationContext.getBean(MissionJobService.class);
 		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
+		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class);
 		TaskFileService taskFileService = applicationContext.getBean(TaskFileService.class);
 		TaskQueue taskQueue = applicationContext.getBean(TaskQueue.class);
 		
@@ -107,25 +110,28 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		{
 			long jobId = jobMapper.generateJobId(missionId);
 			job.setJobId(jobId);
-			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job);
-			JobStatus jobStatus = Bean2BeanUtils.Job2JobStatus(job);
 			
 			//将job切分成task，并存入数据库
 			List<Task> taskList = new ArrayList<>();
-			List<TaskBasic> taskBasicList = new ArrayList<>();
-			List<TaskFile> taskFileList = new ArrayList<>();
+			List<TaskBasic> taskBasicList;
+			List<TaskFile> taskFileList;
+			List<TaskTimestamp> taskTimestampList;
 			taskList = JobSplitter.split(job, fileList, mission.getUserId());
 			taskBasicList = Bean2BeanUtils.taskList2TaskBasicList(taskList);
 			taskFileList = Bean2BeanUtils.taskList2TaskFileList(taskList);
+			taskTimestampList = Bean2BeanUtils.taskList2TaskTimestampList(taskList);
 			taskBasicService.insertTaskBasicList(taskBasicList);
 			taskFileService.insertTaskFileList(taskFileList);
+			taskTimestampService.insertTaskTimestampList(taskTimestampList);
 			
-			//将taskList放入GlobalTaskQueue中
-			PriorityTaskQueueProducer globalTaskQueueProducer = new PriorityTaskQueueProducer(taskQueue, taskList);
-			Thread globalTaskQueueRunner = new Thread(globalTaskQueueProducer);
-			globalTaskQueueRunner.start();
+			//将taskList放入PriorityTaskQueue中
+			PriorityTaskQueueProducer priorityTaskQueueProducer = new PriorityTaskQueueProducer(taskQueue, taskList);
+			Thread priorityTaskQueueRunner = new Thread(priorityTaskQueueProducer);
+			priorityTaskQueueRunner.start();
 			
 			//最后存储job的信息
+			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job);
+			JobStatus jobStatus = Bean2BeanUtils.Job2JobStatus(job,taskList.size());
 			try
 			{
 				jobBasicService.insertJobBasic(jobBasic);

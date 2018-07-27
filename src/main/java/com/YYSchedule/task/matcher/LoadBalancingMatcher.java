@@ -9,6 +9,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import com.YYSchedule.common.pojo.NodeItem;
 import com.YYSchedule.common.pojo.Task;
+import com.YYSchedule.common.rpc.domain.task.TaskStatus;
 import com.YYSchedule.common.utils.StringUtils;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.NodeMapper;
@@ -56,13 +57,15 @@ public class LoadBalancingMatcher
 				nodeMapper.updateNode(updateNodeItemPayload(nodeItem, 1));
 			}
 			else {
-				LOGGER.error("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase" + task.getTaskPhase());
-				throw new Exception("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase" + task.getTaskPhase());
+				task.setTaskStatus(TaskStatus.DISTRIBUTE_FAILED);
+				LOGGER.error("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase: " + task.getTaskPhase());
+				throw new Exception("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase: " + task.getTaskPhase());
 			}
 		}
 		else {
-			LOGGER.error("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase" + task.getTaskPhase());
-			throw new Exception("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase" + task.getTaskPhase());
+			task.setTaskStatus(TaskStatus.DISTRIBUTE_FAILED);
+			LOGGER.error("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase: " + task.getTaskPhase());
+			throw new Exception("没有合适的node给task [ " + task.getTaskId() + " ] " + " ,taskPhase: " + task.getTaskPhase());
 		}
 		
 		if (nodeItem != null) {

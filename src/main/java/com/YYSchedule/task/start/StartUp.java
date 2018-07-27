@@ -13,9 +13,9 @@ import com.YYSchedule.common.rpc.service.task.NodeCallTaskService;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.config.Config;
+import com.YYSchedule.task.distributor.TaskDistributor;
 import com.YYSchedule.task.mapper.JobMapperProducer;
 import com.YYSchedule.task.mapper.MissionMapperProducer;
-import com.YYSchedule.task.queue.DistributeTaskQueueProducer;
 import com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl;
 import com.YYSchedule.task.service.impl.UserCallTaskServiceImpl;
 
@@ -36,7 +36,7 @@ public class StartUp
 	
 	public void startQueueProducer()
 	{
-		applicationContext.getBean(DistributeTaskQueueProducer.class).startThreadPool();
+		applicationContext.getBean(TaskDistributor.class).startThreadPool();
 		
 	}
 	

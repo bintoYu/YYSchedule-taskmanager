@@ -1,4 +1,4 @@
-package com.YYSchedule.task.queue;
+package com.YYSchedule.task.distributor;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -9,14 +9,17 @@ import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
 
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
+import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
 import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.common.rpc.domain.task.TaskStatus;
 import com.YYSchedule.common.utils.StringUtils;
 import com.YYSchedule.store.service.TaskBasicService;
+import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.matcher.LoadBalancingMatcher;
+import com.YYSchedule.task.queue.TaskQueue;
  
 /**
  * 
@@ -25,17 +28,17 @@ import com.YYSchedule.task.matcher.LoadBalancingMatcher;
  * @date 2018年7月5日  
  * @version 1.0
  */
-public class DistributeTaskThread implements Runnable {
+public class TaskDistributorThread implements Runnable {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DistributeTaskThread.class);
-		
-	private TaskQueue taskQueue;
+	private static final Logger LOGGER = LoggerFactory.getLogger(TaskDistributorThread.class);
 	
 	private BlockingQueue<Task> priorityTaskQueue;
 	
 	private String distributeTaskQueue;
 	
 	private TaskBasicService taskBasicService;
+	
+	private TaskTimestampService taskTimestampService;
 	
 	private JmsTemplate jmsTemplate;
 	
@@ -44,9 +47,9 @@ public class DistributeTaskThread implements Runnable {
 	/**
 	 * 
 	 */
-	public DistributeTaskThread(TaskQueue taskQueue,TaskBasicService taskBasicService,JmsTemplate jmsTemplate) {
-		 this.taskQueue = taskQueue;
+	public TaskDistributorThread(TaskQueue taskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
 		 this.priorityTaskQueue =taskQueue.getPriorityTaskQueue();
+		 this.taskTimestampService = taskTimestampService;
 		 this.taskBasicService = taskBasicService;
 		 this.jmsTemplate = jmsTemplate;
 	}
@@ -66,12 +69,11 @@ public class DistributeTaskThread implements Runnable {
 					if (task.getTaskStatus().equals(TaskStatus.DISTRIBUTED) && task.getExecutorId()!=null) {
 							
 						addToDistributeTaskQueue(task);
-							
-						TaskBasic taskBasic = new TaskBasic();
-						taskBasic.setTaskId(task.getTaskId());
-						taskBasic.setTaskPhase(task.getTaskPhase().toString());
-						taskBasic.setTaskStatus(task.getTaskStatus().toString());
-						taskBasicService.updateTaskBasic(taskBasic);
+						
+						TaskTimestamp taskTimestamp = new TaskTimestamp();
+						taskTimestamp.setTaskId(task.getTaskId());
+						taskTimestamp.setDistributedTime(System.currentTimeMillis());
+						taskTimestampService.updateTaskTimestamp(taskTimestamp);
 					}
 				}
 			} catch (InterruptedException ie) {
@@ -79,6 +81,11 @@ public class DistributeTaskThread implements Runnable {
 			} catch (Exception e) {
 				LOGGER.error("分发task失败！ taskId: [ " + task.getTaskId() + " ]" + e.getMessage(), e);
 			}
+			
+			TaskBasic taskBasic = new TaskBasic();
+			taskBasic.setTaskId(task.getTaskId());
+			taskBasic.setTaskStatus(task.getTaskStatus().toString());
+			taskBasicService.updateTaskBasic(taskBasic);
 		}
 	}
 
@@ -120,10 +127,10 @@ public class DistributeTaskThread implements Runnable {
 		}
 		catch(JmsException jmsException)
 		{
-			LOGGER.error("Task [ " + task.getTaskId() + " ] 放入distributeTaskQueue失败！" + jmsException.getMessage());
-			throw new InterruptedException("Task [ " + task.getTaskId() + " ] 放入distributeTaskQueue失败！" + jmsException.getMessage());
+			LOGGER.error("Task [ " + task.getTaskId() + " ] 放入队列distributeTaskQueue失败！" + jmsException.getMessage());
+			throw new InterruptedException("Task [ " + task.getTaskId() + " ] 放入队列distributeTaskQueue失败！" + jmsException.getMessage());
 		}
-		LOGGER.info("Task [ " + task.getTaskId() + " ] 已放入distributeTaskQueue中.");
+		LOGGER.info("Task [ " + task.getTaskId() + " ] 已放入队列distributeTaskQueue中.");
 		return true;
 	}
 

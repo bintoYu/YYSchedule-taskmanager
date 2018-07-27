@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 
+import com.YYSchedule.common.mybatis.pojo.TaskBasic;
 import com.YYSchedule.common.pojo.NodeItem;
 import com.YYSchedule.common.rpc.domain.node.NodePayload;
 import com.YYSchedule.common.rpc.domain.task.TaskPhase;
@@ -18,6 +19,7 @@ import com.YYSchedule.common.rpc.exception.InvalidRequestException;
 import com.YYSchedule.common.rpc.exception.TimeoutException;
 import com.YYSchedule.common.rpc.exception.UnavailableException;
 import com.YYSchedule.common.rpc.service.task.NodeCallTaskService;
+import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.NodeMapper;
 
@@ -86,8 +88,17 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 			throws InvalidRequestException, UnavailableException,
 			TimeoutException, TException
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
+		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
+		
+		TaskBasic taskBasic = new TaskBasic();
+		taskBasic.setTaskId(taskId);
+		taskBasic.setTaskPhase(taskPhase.toString());
+		taskBasic.setTaskStatus(taskStatus.toString());
+		taskBasic.setLoadedTime(System.currentTimeMillis());
+		
+		//更新taskBasic
+		return taskBasicService.updateTaskBasic(taskBasic);
 	}
 
 	/* (non-Javadoc)

@@ -567,3 +567,80 @@ java.lang.Exception: 没有合适的node给task [ 1000006020001 ]  ,taskPhaseCOM
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
+18350080 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.net.SocketException: Connection reset, attempting to automatically reconnect
+20988336 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.net.SocketException: Connection reset, attempting to automatically reconnect
+21178294 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.net.SocketException: Connection reset, attempting to automatically reconnect
+25945947 - Error occurred during processing of message.
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.store.service.TaskTimestampService] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:93)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:479)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3477  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2873  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2886  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2936  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2881  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+41936 - 没有合适的node给task [ 1000008020003 ]  ,taskPhaseSTATIC
+41938 - 分发task失败！ taskId: [ 1000008020003 ]没有合适的node给task [ 1000008020003 ]  ,taskPhaseSTATIC
+java.lang.Exception: 没有合适的node给task [ 1000008020003 ]  ,taskPhaseSTATIC
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:105)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+41941 - 没有合适的node给task [ 1000008020002 ]  ,taskPhaseSTATIC
+41941 - 分发task失败！ taskId: [ 1000008020002 ]没有合适的node给task [ 1000008020002 ]  ,taskPhaseSTATIC
+java.lang.Exception: 没有合适的node给task [ 1000008020002 ]  ,taskPhaseSTATIC
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:105)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+41941 - 没有合适的node给task [ 1000008020001 ]  ,taskPhaseSTATIC
+41941 - 分发task失败！ taskId: [ 1000008020001 ]没有合适的node给task [ 1000008020001 ]  ,taskPhaseSTATIC
+java.lang.Exception: 没有合适的node给task [ 1000008020001 ]  ,taskPhaseSTATIC
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:105)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+2444  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+24652 - 没有合适的node给task [ 1000009020003 ]  ,taskPhase: STATIC
+24653 - 分发task失败！ taskId: [ 1000009020003 ]没有合适的node给task [ 1000009020003 ]  ,taskPhase: STATIC
+java.lang.Exception: 没有合适的node给task [ 1000009020003 ]  ,taskPhase: STATIC
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:105)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+24663 - 没有合适的node给task [ 1000009020002 ]  ,taskPhase: STATIC
+24663 - 分发task失败！ taskId: [ 1000009020002 ]没有合适的node给task [ 1000009020002 ]  ,taskPhase: STATIC
+java.lang.Exception: 没有合适的node给task [ 1000009020002 ]  ,taskPhase: STATIC
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:105)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+24664 - 没有合适的node给task [ 1000009020001 ]  ,taskPhase: STATIC
+24664 - 分发task失败！ taskId: [ 1000009020001 ]没有合适的node给task [ 1000009020001 ]  ,taskPhase: STATIC
+java.lang.Exception: 没有合适的node给task [ 1000009020001 ]  ,taskPhase: STATIC
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:105)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)

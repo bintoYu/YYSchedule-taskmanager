@@ -1,5 +1,6 @@
 package com.YYSchedule.task.utils;
 
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.common.rpc.domain.job.Job;
 import com.YYSchedule.common.rpc.domain.task.TaskStatus;
+import com.YYSchedule.common.utils.PathUtils;
 
 public class JobSplitter
 {
@@ -43,6 +45,7 @@ public class JobSplitter
 			task.setTaskStatus(TaskStatus.COMMITTED);
 			task.setLoadedTime(System.currentTimeMillis());
 			task.setTimeout(job.getTimeout());
+			
 			task.setFileName("/" + userId + "/" + file);
 			
 			taskList.add(task);
