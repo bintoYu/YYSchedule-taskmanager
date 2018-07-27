@@ -1,18 +1,17 @@
 package test;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.MissionMapper;
 
 public class MyThread extends Thread
 {
-	private ApplicationContext applicationContext;
+	private AbstractApplicationContext applicationContext;
 	
 	private MissionMapper missionMapper;
 	
-    public ApplicationContext getApplicationContext()
+    public AbstractApplicationContext getApplicationContext()
 	{
 		return applicationContext;
 	}
@@ -27,7 +26,7 @@ public class MyThread extends Thread
 		this.missionMapper = missionMapper;
 	}
 
-	public MyThread(ApplicationContext applicationContext){
+	public MyThread(AbstractApplicationContext applicationContext){
 		this.applicationContext = applicationContext;
 		
 		missionMapper = applicationContext.getBean(MissionMapper.class);
@@ -39,7 +38,7 @@ public class MyThread extends Thread
     }
     
     public static void main(String[] args){
-    	ApplicationContext applicationContext =	ApplicationContextHandler.getInstance().getApplicationContext();
+    	AbstractApplicationContext applicationContext =	ApplicationContextHandler.getInstance().getApplicationContext();
     	
     	MissionMapper missionMapper = new MyThread(applicationContext).getMissionMapper();
     	

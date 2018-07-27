@@ -1,11 +1,11 @@
 package com.YYSchedule.task.applicationContext;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationContextHandler
 {
-	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
+	private AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
 	
 	private ApplicationContextHandler(){
 		
@@ -17,7 +17,7 @@ public class ApplicationContextHandler
 		return applicationContextHandler;
 	}
 
-	public ApplicationContext getApplicationContext()
+	public AbstractApplicationContext getApplicationContext()
 	{
 		return applicationContext;
 	}

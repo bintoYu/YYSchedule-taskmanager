@@ -9,12 +9,21 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
-	<!-- 配置包扫描器，扫描@Service主键的类 -->
+
 	<context:component-scan base-package="com.YYSchedule.task.mapper"/>
-	
+	<context:component-scan base-package="com.YYSchedule.task.queue"/>
+	<context:component-scan base-package="com.YYSchedule.task.config"/>
 	<context:component-scan base-package="com.YYSchedule.store.ftp"/>
-	<!--  
+	 
 	<util:properties id="config" location="classpath:properties/config.properties"/>
-	-->
 	
+	<bean id="threadPoolExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${cool_pool_size}" />
+		<property name="keepAliveSeconds" value="${keep_alive_seconds}" />
+		<property name="maxPoolSize" value="${max_pool_size}" />
+		<property name="queueCapacity" value="20" />
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
 </beans>

@@ -2,14 +2,14 @@ package test;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.YYSchedule.task.mapper.MissionMapper;
 
 public class MissionMapperTest
 {
-	private ApplicationContext applicationContext;
+	private AbstractApplicationContext applicationContext;
 
 	@Before
 	public void init() {

@@ -27,7 +27,7 @@ public class FtpTest
     	FtpConnFactory ftpConnFactory = applicationContext.getBean(FtpConnFactory.class);
     	
     	FTPClient ftpClient = ftpConnFactory.connect();
-    	FtpUtils.upload(ftpClient, file, "/test/");
+    	FtpUtils.upload(ftpClient, file, "/test/123/");
     	
     }
 }

@@ -1,22 +1,24 @@
 package test;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 import com.YYSchedule.common.mybatis.pojo.UserBasic;
 import com.YYSchedule.store.service.UserBasicService;
+import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 
 
 public class UserBasicServiceTest
 {
-	private ApplicationContext applicationContext;
+	private AbstractApplicationContext applicationContext;
 
 	@Before
 	public void init() {
 		//创建一个spring容器
-		applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
+		applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
 	}
 	
     @Test
@@ -24,11 +26,27 @@ public class UserBasicServiceTest
     {
         UserBasicService userBasicService = applicationContext.getBean(UserBasicService.class);
     	
-        int userId = 1;
+        int userId = 3;
 
-        UserBasic userBasic= userBasicService.getUserBasicMapperById(userId);
+        UserBasic userBasic= userBasicService.getUserBasicById(userId);
 
-        System.out.println(userBasic.getUsername());
+        if(userBasic != null)
+        {
+        	System.out.println(userBasic.getUsername());
+        }
+    }
+    
+    @Test
+    public void testGetUserBasicList()
+    {
+        UserBasicService userBasicService = applicationContext.getBean(UserBasicService.class);
+
+        List<UserBasic> userBasicList = userBasicService.getUserBasicList();
+
+        for(UserBasic userBasic:userBasicList)
+        {
+        	System.out.println(userBasic.getUsername() + "\t" + userBasic.getPassword() + "\t" + userBasic.getMissionCount());
+        }
     }
     
     @Test

@@ -1,36 +1,60 @@
 package com.YYSchedule.task.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
+import com.YYSchedule.common.mybatis.pojo.JobBasic;
+import com.YYSchedule.common.mybatis.pojo.JobStatus;
 import com.YYSchedule.common.mybatis.pojo.MissionBasic;
-import com.YYSchedule.common.pojo.Job;
-import com.YYSchedule.common.rpc.domain.job.JobDistributionMode;
-import com.YYSchedule.common.rpc.domain.job.JobOperationRequirement;
+import com.YYSchedule.common.mybatis.pojo.MissionJob;
+import com.YYSchedule.common.mybatis.pojo.TaskBasic;
+import com.YYSchedule.common.mybatis.pojo.TaskFile;
+import com.YYSchedule.common.mybatis.pojo.UserBasic;
+import com.YYSchedule.common.pojo.NodeItem;
+import com.YYSchedule.common.pojo.Task;
+import com.YYSchedule.common.rpc.domain.job.Job;
 import com.YYSchedule.common.rpc.domain.job.JobPriority;
-import com.YYSchedule.common.rpc.domain.job.JobResourceRequirement;
 import com.YYSchedule.common.rpc.domain.mission.Mission;
-import com.YYSchedule.common.rpc.domain.parameter.JobParameter;
+import com.YYSchedule.common.rpc.domain.node.NodePayload;
+import com.YYSchedule.common.rpc.domain.node.NodeRuntime;
 import com.YYSchedule.common.rpc.domain.task.TaskPhase;
 import com.YYSchedule.common.rpc.exception.InvalidRequestException;
 import com.YYSchedule.common.rpc.exception.NotFoundException;
 import com.YYSchedule.common.rpc.exception.TimeoutException;
 import com.YYSchedule.common.rpc.exception.UnavailableException;
-import com.YYSchedule.common.utils.JobUtils;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;
+import com.YYSchedule.common.utils.Bean2BeanUtils;
 import com.YYSchedule.store.ftp.FtpConnFactory;
+import com.YYSchedule.store.service.JobBasicService;
+import com.YYSchedule.store.service.JobStatusService;
 import com.YYSchedule.store.service.MissionBasicService;
+import com.YYSchedule.store.service.MissionJobService;
+import com.YYSchedule.store.service.TaskBasicService;
+import com.YYSchedule.store.service.TaskFileService;
+import com.YYSchedule.store.service.UserBasicService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.JobMapper;
 import com.YYSchedule.task.mapper.MissionMapper;
+import com.YYSchedule.task.mapper.NodeMapper;
+import com.YYSchedule.task.queue.PriorityTaskQueueProducer;
+import com.YYSchedule.task.queue.TaskQueue;
+import com.YYSchedule.task.utils.JobSplitter;
 
+/**
+ * @author ybt
+ *
+ * @date 2018年6月  
+ * @version 1.0  
+ */
 public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 {
 	private static final Logger LOGGER = LoggerFactory
@@ -46,88 +70,79 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 	@Override
 	public long submitMission(Mission mission) throws InvalidRequestException,
 			UnavailableException, TimeoutException, TException
-	{
-		//获取用户上传的mission中的所有属性
-		int userId = mission.getUserId();
-		String missionName = mission.getMissionName();
+	{	
+		//获取用户上传的mission的公用属性
 		List<String> fileList = mission.getFileList();
-		List<TaskPhase> taskPhaseList = mission.getTaskPhaseList();
-		JobDistributionMode jobDistributionMode = mission.getJobDistributionMode();
-		JobPriority jobPriority = mission.getJobPriority();
-		List<JobOperationRequirement> jobOperationRequirementList = mission.getJobOperationRequirementList();
-		List<JobResourceRequirement> jobResourceRequirementList = mission.getJobResourceRequirementList();
-		List<JobParameter> parameterList = mission.getParameterList();
-		long impatienceTime = mission.getImpatienceTime();
+		List<Job> jobList = mission.getJobList();
+		//long impatienceTime = mission.getImpatienceTime();
 		
-		//验证属性是否合法
-		if (String.valueOf(userId).length() > 11 || taskPhaseList == null
-				|| !JobUtils.isJobDistributionModeMember(jobDistributionMode)
-				|| !JobUtils.isJobPriorityMember(jobPriority)
-				|| jobOperationRequirementList == null
-				|| jobResourceRequirementList == null || parameterList == null
-				|| String.valueOf(impatienceTime).length() > 18) {
-			
-			LOGGER.error("Invalid submission parameters [ " + userId + " : "
-					+ jobDistributionMode + " : " + jobPriority + " : "
-					+ impatienceTime + " ].");
-			throw new InvalidRequestException(
-					"Invalid submission parameters [ " + userId + " : "
-							+ jobDistributionMode + " : " + jobPriority + " : "
-							+ impatienceTime + " ].");
-		}
+		//验证mission是否合法
+		validateMission(mission);
 		
-		//获取spring容器，并得到missionMapper及jobMapper
-		ApplicationContext applicationContext =	ApplicationContextHandler.getInstance().getApplicationContext();
+		//获取spring容器，得到需要的bean
+		AbstractApplicationContext applicationContext =	ApplicationContextHandler.getInstance().getApplicationContext();
 		MissionMapper missionMapper = applicationContext.getBean(MissionMapper.class);
 		JobMapper jobMapper = applicationContext.getBean(JobMapper.class);
+		MissionBasicService missionBasicService = applicationContext.getBean(MissionBasicService.class);
+		JobBasicService jobBasicService = applicationContext.getBean(JobBasicService.class);
+		JobStatusService jobStatusService = applicationContext.getBean(JobStatusService.class);
+		MissionJobService missionJobService = applicationContext.getBean(MissionJobService.class);
+		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
+		TaskFileService taskFileService = applicationContext.getBean(TaskFileService.class);
+		TaskQueue taskQueue = applicationContext.getBean(TaskQueue.class);
 		
 		//生成missionId，并且将missionBasic信息存入数据库中
-		int missionId = missionMapper.generateMissionId(userId);
-		MissionBasicService missionBasicService = applicationContext.getBean(MissionBasicService.class);
-		MissionBasic missionBasic;
-		try {
-			missionBasic = new MissionBasic(missionId,missionName,userId);
-			missionBasicService.insertMissionBasic(missionBasic);
-			LOGGER.info("Received new mission[ " + missionId + "]" );
-		} catch (ParseException pe) {
-			LOGGER.error("sql注入mission_start_time时间错误！" + pe.getMessage(), pe);
-		}
-
-		//将mission中的所有文件上传到ftp上
-		FtpConnFactory.connect(ftpHost)
+		int missionId = missionMapper.generateMissionId(mission.getUserId());
+		LOGGER.info("success to generate missionId:" + missionId);
+		mission.setMissionId(missionId);
+		MissionBasic missionBasic = Bean2BeanUtils.Mission2MissionBasic(mission);
+		missionBasicService.insertMissionBasic(missionBasic);
+		LOGGER.info("Received new mission[ " + missionId + "]" );
 		
 		
-		//根据任务种类，生成job并放入观察者中
-		for(TaskPhase taskPhase : taskPhaseList)
+		//根据任务种类，获得job,转化成JobBasic存入数据库，再对job进行切分
+		//新生成的mission需要对jobCountMap进行初始化
+		jobMapper.initJobCountMap(missionId, 0);
+		for(Job job : jobList)
 		{
-			Job job = new Job();
 			long jobId = jobMapper.generateJobId(missionId);
-			
 			job.setJobId(jobId);
-			job.setSubmitterId(userId);
-			job.setJobDistributionMode(jobDistributionMode);
-			job.setJobPriority(jobPriority);
-			job.setJobOperationRequirementList(jobOperationRequirementList);
-			job.setJobResourceRequirementList(jobResourceRequirementList);
-			job.setJobStatus(0);
-			job.setJobParameterList(parameterList);
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String nowTime = df.format(new Date());
-			Date time;
-			try {
-				time = df.parse(nowTime);
-				job.setCommittedTime(time);
-			} catch (ParseException pe) {
-				LOGGER.error("sql注入job_committed_time错误！" + pe.getMessage(), pe);
-			}
-			job.setMissionId(missionId);
+			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job);
+			JobStatus jobStatus = Bean2BeanUtils.Job2JobStatus(job);
 			
+			//将job切分成task，并存入数据库
+			List<Task> taskList = new ArrayList<>();
+			List<TaskBasic> taskBasicList = new ArrayList<>();
+			List<TaskFile> taskFileList = new ArrayList<>();
+			taskList = JobSplitter.split(job, fileList, mission.getUserId());
+			taskBasicList = Bean2BeanUtils.taskList2TaskBasicList(taskList);
+			taskFileList = Bean2BeanUtils.taskList2TaskFileList(taskList);
+			taskBasicService.insertTaskBasicList(taskBasicList);
+			taskFileService.insertTaskFileList(taskFileList);
 			
+			//将taskList放入GlobalTaskQueue中
+			PriorityTaskQueueProducer globalTaskQueueProducer = new PriorityTaskQueueProducer(taskQueue, taskList);
+			Thread globalTaskQueueRunner = new Thread(globalTaskQueueProducer);
+			globalTaskQueueRunner.start();
+			
+			//最后存储job的信息
+			try
+			{
+				jobBasicService.insertJobBasic(jobBasic);
+				jobStatusService.insertJobStatus(jobStatus);
+				
+				//将missionId-jobId对应关系存入数据库
+				MissionJob missionJob = new MissionJob();
+				missionJob.setMissionId(missionId);
+				missionJob.setJobId(jobId);
+				missionJobService.insertMissionJob(missionJob);
+			}catch(Exception e) {
+				LOGGER.error("Failed to save jobBasic or jobStatus into database : " + jobBasic + ", " + jobStatus + " : " + e.getMessage(), e);
+				throw new UnavailableException("Failed to save jobBasic or jobStatus into database : " + jobBasic + ", " + jobStatus + " : " + e.getMessage());
+			} 
 			
 		}
-			
-			  
-		return 0;
+		return missionId;
 	}
 
 	@Override
@@ -147,5 +162,79 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		return null;
 	}
 
-	
+	public void validateMission(Mission mission) throws InvalidRequestException
+	{
+		int userId = mission.getUserId();
+		List<Job> jobList = mission.getJobList();
+		
+		UserBasicService userBasicService = ApplicationContextHandler.getInstance().getApplicationContext().getBean(UserBasicService.class);
+		UserBasic userBasic = userBasicService.getUserBasicById(userId);
+		if(userBasic == null)
+		{
+			LOGGER.error("用户提交Mission中的userId不在数据库中, userId : " + userId);
+			throw new InvalidRequestException("用户提交Mission中的userId不在数据库中, userId : " + userId);
+		}
+		
+		for(Job job : jobList)
+		{
+			int isJobPriorityValid = 0;
+			JobPriority jobPriority = job.getJobPriority();
+			JobPriority[] jobPriorities = JobPriority.values();
+			for (JobPriority priority : jobPriorities) {
+				if (priority.equals(jobPriority)) {
+					isJobPriorityValid = 1;
+				}
+			}
+			if(isJobPriorityValid == 0)
+			{
+				LOGGER.error("Invalid mission parameters, jobPriority : " + jobPriority);
+				throw new InvalidRequestException("Invalid mission parameters, jobPriority : " + jobPriority);
+			}
+			
+			int isTaskPhaseValid = 0;
+			TaskPhase taskPhase = job.getTaskPhase();
+			TaskPhase[] taskPhases = TaskPhase.values();
+			for(TaskPhase phase : taskPhases)
+			{
+				if(phase.equals(taskPhase))
+				{
+					isTaskPhaseValid = 1;
+				}
+			}
+			if(isTaskPhaseValid == 0)
+			{
+				LOGGER.error("Invalid mission parameters, taskPhase : " + taskPhase);
+				throw new InvalidRequestException("Invalid mission parameters, taskPhase : " + taskPhase);
+			}
+		}
+	}
+
+	/* 
+	 * 获取所有node节点信息
+	 * @return nodePayloadList
+	 */
+	@Override
+	public List<NodePayload> obtainAllNode() throws UnavailableException, TimeoutException, TException
+	{
+		List<NodePayload> nodePayloadList = new ArrayList<>();
+		
+		/****************获取NodeMapper(taskmanager存储node节点信息的容器)******************/
+		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
+		NodeMapper nodeMapper = applicationContext.getBean(NodeMapper.class);
+		Map<TaskPhase, ConcurrentSkipListSet<NodeItem>> nodeMap = nodeMapper.getNodeMap();
+		
+		/*************************遍历nodeMap************************/
+		for(TaskPhase taskPhase : nodeMap.keySet())
+		{
+			ConcurrentSkipListSet<NodeItem> concurrentSkipListSet = nodeMap.get(taskPhase);
+			for(NodeItem nodeItem : concurrentSkipListSet)
+			{
+				NodePayload nodePayload = Bean2BeanUtils.nodeItem2NodePayload(nodeItem);
+				
+				nodePayloadList.add(nodePayload);
+			}
+		}
+		
+		return nodePayloadList;
+	}
 }

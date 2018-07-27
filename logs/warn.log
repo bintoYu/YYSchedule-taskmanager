@@ -1,0 +1,569 @@
+11    - error
+2679  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+1159192 - Error occurred during processing of message.
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+### The error may involve com.YYSchedule.store.mapper.TaskBasicMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into task_basic      ( task_id,                       task_phase,                       task_status )       values ( ?,                       ?,                       ? )
+### Cause: java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+; SQL []; Field 'loaded_time' doesn't have a default value; nested exception is java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:243)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy9.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy24.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.TaskBasicServiceImpl.insertTaskBasicList(TaskBasicServiceImpl.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy25.insertTaskBasicList(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:109)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:413)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy30.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+2548  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+7201  - Error occurred during processing of message.
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+### The error may involve com.YYSchedule.store.mapper.TaskBasicMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into task_basic      ( task_id,                       task_phase,                       task_status )       values ( ?,                       ?,                       ? )
+### Cause: java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+; SQL []; Field 'loaded_time' doesn't have a default value; nested exception is java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:243)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy9.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy24.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.TaskBasicServiceImpl.insertTaskBasicList(TaskBasicServiceImpl.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy25.insertTaskBasicList(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:109)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:413)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Field 'loaded_time' doesn't have a default value
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy30.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+2747  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+6095  - Error occurred during processing of message.
+org.springframework.jdbc.UncategorizedSQLException: 
+### Error updating database.  Cause: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+### The error may involve com.YYSchedule.store.mapper.TaskFileMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into task_file      ( task_id,                       file_name )       values ( ?,                       ? )
+### Cause: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+; uncategorized SQLException for SQL []; SQL state [HY000]; error code [1366]; Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1; nested exception is java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:84)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy9.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy26.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.TaskFileServiceImpl.insertTaskFileList(TaskFileServiceImpl.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy27.insertTaskFileList(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:110)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:413)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy30.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+2937  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+5857  - Error occurred during processing of message.
+org.springframework.jdbc.UncategorizedSQLException: 
+### Error updating database.  Cause: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+### The error may involve com.YYSchedule.store.mapper.TaskFileMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into task_file      ( task_id,                       file_name )       values ( ?,                       ? )
+### Cause: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+; uncategorized SQLException for SQL []; SQL state [HY000]; error code [1366]; Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1; nested exception is java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:84)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy9.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy26.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.TaskFileServiceImpl.insertTaskFileList(TaskFileServiceImpl.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy27.insertTaskFileList(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:110)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:413)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy30.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+2724  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+8299  - Error occurred during processing of message.
+org.springframework.jdbc.UncategorizedSQLException: 
+### Error updating database.  Cause: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+### The error may involve com.YYSchedule.store.mapper.TaskFileMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into task_file      ( task_id,                       file_name )       values ( ?,                       ? )
+### Cause: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+; uncategorized SQLException for SQL []; SQL state [HY000]; error code [1366]; Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1; nested exception is java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:84)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy9.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy26.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.TaskFileServiceImpl.insertTaskFileList(TaskFileServiceImpl.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy27.insertTaskFileList(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:110)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:413)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Incorrect string value: '\xE6\x96\xB0\xE5\xB9\xB3...' for column 'file_name' at row 1
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy30.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+2874  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3065  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2568  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2599  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2777  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3837  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2671  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2693  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2601  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2631  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2925  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+6946  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2928  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2771  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2625  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3029  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+869477 - 分发task失败！ taskId: [ 1000001010003 ]No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:51)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:91)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:58)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+869477 - 分发task失败！ taskId: [ 1000001010001 ]No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:51)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:91)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:58)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+869477 - 分发task失败！ taskId: [ 1000001010002 ]No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:51)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:91)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:58)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+869582 - 分发task失败！ taskId: [ 1000001020003 ]No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:51)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:91)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:58)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+869583 - 分发task失败！ taskId: [ 1000001020002 ]No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:51)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:91)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:58)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+869583 - 分发task失败！ taskId: [ 1000001020001 ]No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [com.YYSchedule.task.mapper.NodeMapper] is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:371)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:968)
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:51)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:91)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:58)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3351  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4122  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2431265 - Thrift error occurred during processing of message.
+org.apache.thrift.protocol.TProtocolException: Required field 'taskPhase' was not present! Struct: NodePayload(nodeId:192.168.2.91:7000, nodeRuntime:NodeRuntime(cpuCount:4, cpuCores:4, cpuMhz:3392, cpuUsedPerc:54.66, freeMem:1670, jvmFreeMem:72), queueLimit:500, queueLength:0, expectedDelay:0, taskPhase:null)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload.validate(NodePayload.java:686)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload$NodePayloadStandardScheme.write(NodePayload.java:800)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload$NodePayloadStandardScheme.write(NodePayload.java:1)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload.write(NodePayload.java:627)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$obtainAllNode_result$obtainAllNode_resultStandardScheme.write(UserCallTaskService.java:5560)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$obtainAllNode_result$obtainAllNode_resultStandardScheme.write(UserCallTaskService.java:1)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$obtainAllNode_result.write(UserCallTaskService.java:5428)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:55)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+2639  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4413  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+333892 - 分发task失败！ taskId: [ 1000004010002 ]null
+java.lang.NullPointerException
+	at com.YYSchedule.store.util.ActiveMQUtils.sendTask(ActiveMQUtils.java:138)
+	at com.YYSchedule.task.queue.DistributeTaskThread.addToDistributeTaskQueue(DistributeTaskThread.java:119)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:68)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+333892 - 分发task失败！ taskId: [ 1000004010003 ]null
+java.lang.NullPointerException
+	at com.YYSchedule.store.util.ActiveMQUtils.sendTask(ActiveMQUtils.java:138)
+	at com.YYSchedule.task.queue.DistributeTaskThread.addToDistributeTaskQueue(DistributeTaskThread.java:119)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:68)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+333892 - 分发task失败！ taskId: [ 1000004010001 ]null
+java.lang.NullPointerException
+	at com.YYSchedule.store.util.ActiveMQUtils.sendTask(ActiveMQUtils.java:138)
+	at com.YYSchedule.task.queue.DistributeTaskThread.addToDistributeTaskQueue(DistributeTaskThread.java:119)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:68)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+334008 - 分发task失败！ taskId: [ 1000004020002 ]null
+java.lang.NullPointerException
+	at com.YYSchedule.store.util.ActiveMQUtils.sendTask(ActiveMQUtils.java:138)
+	at com.YYSchedule.task.queue.DistributeTaskThread.addToDistributeTaskQueue(DistributeTaskThread.java:119)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:68)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+334008 - 分发task失败！ taskId: [ 1000004020001 ]null
+java.lang.NullPointerException
+	at com.YYSchedule.store.util.ActiveMQUtils.sendTask(ActiveMQUtils.java:138)
+	at com.YYSchedule.task.queue.DistributeTaskThread.addToDistributeTaskQueue(DistributeTaskThread.java:119)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:68)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+334009 - 分发task失败！ taskId: [ 1000004020003 ]null
+java.lang.NullPointerException
+	at com.YYSchedule.store.util.ActiveMQUtils.sendTask(ActiveMQUtils.java:138)
+	at com.YYSchedule.task.queue.DistributeTaskThread.addToDistributeTaskQueue(DistributeTaskThread.java:119)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:68)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3349  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3350  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+12639 - 没有合适的node给task [ 1000006010002 ]  ,taskPhaseCOMMON
+12639 - 没有合适的node给task [ 1000006010001 ]  ,taskPhaseCOMMON
+12640 - 分发task失败！ taskId: [ 1000006010002 ]没有合适的node给task [ 1000006010002 ]  ,taskPhaseCOMMON
+java.lang.Exception: 没有合适的node给task [ 1000006010002 ]  ,taskPhaseCOMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:98)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+12640 - 分发task失败！ taskId: [ 1000006010001 ]没有合适的node给task [ 1000006010001 ]  ,taskPhaseCOMMON
+java.lang.Exception: 没有合适的node给task [ 1000006010001 ]  ,taskPhaseCOMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:98)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+12642 - 没有合适的node给task [ 1000006010003 ]  ,taskPhaseCOMMON
+12643 - 分发task失败！ taskId: [ 1000006010003 ]没有合适的node给task [ 1000006010003 ]  ,taskPhaseCOMMON
+java.lang.Exception: 没有合适的node给task [ 1000006010003 ]  ,taskPhaseCOMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:98)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+12720 - 没有合适的node给task [ 1000006020002 ]  ,taskPhaseCOMMON
+12720 - 分发task失败！ taskId: [ 1000006020002 ]没有合适的node给task [ 1000006020002 ]  ,taskPhaseCOMMON
+java.lang.Exception: 没有合适的node给task [ 1000006020002 ]  ,taskPhaseCOMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:98)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+12721 - 没有合适的node给task [ 1000006020003 ]  ,taskPhaseCOMMON
+12721 - 分发task失败！ taskId: [ 1000006020003 ]没有合适的node给task [ 1000006020003 ]  ,taskPhaseCOMMON
+java.lang.Exception: 没有合适的node给task [ 1000006020003 ]  ,taskPhaseCOMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:98)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+12721 - 没有合适的node给task [ 1000006020001 ]  ,taskPhaseCOMMON
+12721 - 分发task失败！ taskId: [ 1000006020001 ]没有合适的node给task [ 1000006020001 ]  ,taskPhaseCOMMON
+java.lang.Exception: 没有合适的node给task [ 1000006020001 ]  ,taskPhaseCOMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:65)
+	at com.YYSchedule.task.queue.DistributeTaskThread.schedule(DistributeTaskThread.java:98)
+	at com.YYSchedule.task.queue.DistributeTaskThread.run(DistributeTaskThread.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
