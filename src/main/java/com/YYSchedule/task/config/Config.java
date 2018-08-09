@@ -18,10 +18,11 @@ public class Config
 	@Value("#{config.node_call_task_port}")
 	private int node_call_task_port;
 
-	@Value("#{config.distribute_thread_num}")
-	private int distribute_thread_num;
+	@Value("#{config.distributor_thread_num}")
+	private int distributor_thread_num;
 	
-	
+	@Value("#{config.result_consumer_thread_num}")
+	private int result_consumer_thread_num;
 	
 	public String getFtp_server_urls()
 	{
@@ -38,14 +39,19 @@ public class Config
 		return user_call_task_port;
 	}
 
-	public int getDistribute_thread_num()
+	public int getDistributor_thread_num()
 	{
-		return distribute_thread_num;
+		return distributor_thread_num;
 	}
 
 	public int getNode_call_task_port()
 	{
 		return node_call_task_port;
+	}
+
+	public int getResult_consumer_thread_num()
+	{
+		return result_consumer_thread_num;
 	}
 
 	

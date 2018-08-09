@@ -13,6 +13,7 @@ import com.YYSchedule.common.rpc.service.task.NodeCallTaskService;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.config.Config;
+import com.YYSchedule.task.consumer.ResultQueueConsumer;
 import com.YYSchedule.task.distributor.TaskDistributor;
 import com.YYSchedule.task.mapper.JobMapperProducer;
 import com.YYSchedule.task.mapper.MissionMapperProducer;
@@ -34,10 +35,10 @@ public class StartUp
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(StartUp.class);
 	
-	public void startQueueProducer()
+	public void startQueueThread()
 	{
 		applicationContext.getBean(TaskDistributor.class).startThreadPool();
-		
+		applicationContext.getBean(ResultQueueConsumer.class).startThreadPool();
 	}
 	
 	public void startMapperProducer()
@@ -110,7 +111,7 @@ public class StartUp
 		StartUp startUp = new StartUp(applicationContext);
 		startUp.startUserCallTaskService();
 		startUp.startNodeCallTaskService();
-		startUp.startQueueProducer();
+		startUp.startQueueThread();
 		startUp.startMapperProducer();
 		LOGGER.info("taskmanager注册成功！");
 	}

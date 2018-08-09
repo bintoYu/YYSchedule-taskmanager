@@ -644,3 +644,63 @@ java.lang.Exception: 没有合适的node给task [ 1000009020001 ]  ,taskPhase: S
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
+6588  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2878  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2810  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+6973  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+170140365 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.io.EOFException, attempting to automatically reconnect
+4514  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3028  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3059  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3073  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3122  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3481  - Failed to startup UserCallTask Server at port : 6000 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$1.startUpUserCallTaskService(StartUp.java:63)
+	at com.YYSchedule.task.start.StartUp$1.run(StartUp.java:56)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+3481  - Failed to startup NodeCallTask Server at port : 6010 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$2.startUpNodeCallTaskService(StartUp.java:92)
+	at com.YYSchedule.task.start.StartUp$2.run(StartUp.java:85)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+3048  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+57808 - Thrift error occurred during processing of message.
+org.apache.thrift.protocol.TProtocolException: Required field 'engineLoggerList' was not present! Struct: NodePayload(nodeId:192.168.2.91:7000, nodeRuntime:NodeRuntime(cpuCount:4, cpuCores:4, cpuMhz:3392, cpuUsedPerc:57.04, freeMem:1434, jvmFreeMem:65), queueLimit:500, queueLength:0, expectedDelay:0, taskPhase:COMMON, engineLoggerList:null)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload.validate(NodePayload.java:790)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload$NodePayloadStandardScheme.write(NodePayload.java:923)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload$NodePayloadStandardScheme.write(NodePayload.java:1)
+	at com.YYSchedule.common.rpc.domain.node.NodePayload.write(NodePayload.java:720)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$obtainAllNode_result$obtainAllNode_resultStandardScheme.write(UserCallTaskService.java:5560)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$obtainAllNode_result$obtainAllNode_resultStandardScheme.write(UserCallTaskService.java:1)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$obtainAllNode_result.write(UserCallTaskService.java:5428)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:55)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)

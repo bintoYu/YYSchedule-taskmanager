@@ -46,7 +46,7 @@ public class JobSplitter
 			task.setLoadedTime(System.currentTimeMillis());
 			task.setTimeout(job.getTimeout());
 			
-			task.setFileName("/" + userId + "/" + file);
+			task.setFileName(file);
 			
 			taskList.add(task);
 		}

@@ -8,8 +8,8 @@ import org.springframework.context.support.AbstractApplicationContext;
 import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.common.rpc.domain.job.JobPriority;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
-import com.YYSchedule.task.queue.DistributeTaskQueueProducer;
-import com.YYSchedule.task.queue.DistributeTaskThread;
+import com.YYSchedule.task.distributor.TaskDistributor;
+import com.YYSchedule.task.distributor.TaskDistributorThread;
 import com.YYSchedule.task.queue.PriorityTaskQueueProducer;
 import com.YYSchedule.task.queue.TaskQueue;
 
@@ -43,7 +43,7 @@ public class DisTributeTaskQueuePoolTest
 	
 	public void startDis()
 	{
-		applicationContext.getBean(DistributeTaskQueueProducer.class).startThreadPool();
+		applicationContext.getBean(TaskDistributor.class).startThreadPool();
 	}
 	
 	public static void main(String[] args)

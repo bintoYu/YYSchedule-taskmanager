@@ -28,7 +28,7 @@ public class TaskDistributor
 
 	public void startThreadPool()
 	{
-		int distribute_thread_num = config.getDistribute_thread_num();
+		int distribute_thread_num = config.getDistributor_thread_num();
 		
 		for(int i = 0; i < distribute_thread_num; i++)
 		{
