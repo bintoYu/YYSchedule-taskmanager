@@ -13,13 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import com.YYSchedule.common.pojo.Task;
 
-/**
- * Priority Task Queue Producer
- * 		thread for generating and keeping global task queue
- * @author yanwei
- * @date 2013-1-6 上午11:22:20
- * 
- */
 public class PriorityTaskQueueProducer implements Runnable {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(PriorityTaskQueueProducer.class);

@@ -1,6 +1,7 @@
 package com.YYSchedule.task.matcher;
 
 import java.util.NavigableSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.common.rpc.domain.task.TaskStatus;
 import com.YYSchedule.common.utils.StringUtils;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
-import com.YYSchedule.task.mapper.NodeMapper;
+import com.YYSchedule.task.mapper.NodeItemMapper;
 
 /**
  * 
@@ -44,14 +45,13 @@ public class LoadBalancingMatcher
 		NodeItem nodeItem = null;
 		
 		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
-		NodeMapper nodeMapper = applicationContext.getBean(NodeMapper.class);
-		ConcurrentSkipListSet<NodeItem> selectedNodeSet = null;
+		NodeItemMapper nodeMapper = applicationContext.getBean(NodeItemMapper.class);
 		
-		selectedNodeSet = nodeMapper.getNodeSet(task.getTaskPhase());
+		ConcurrentHashMap<String, NodeItem> nodeMap = nodeMapper.getNodeMap(task.getTaskPhase());
 		
 		// 选出最合适的node
-		if (selectedNodeSet != null && selectedNodeSet.size() != 0) {
-			nodeItem = getNodeItem(selectedNodeSet);
+		if (nodeMap != null && nodeMap.size() != 0) {
+			nodeItem = getNodeItem(nodeMap);
 			// nodeItem = selectedNodeSet.last();
 			if (nodeItem != null) {
 				nodeMapper.updateNode(updateNodeItemPayload(nodeItem, 1));
@@ -79,23 +79,30 @@ public class LoadBalancingMatcher
 	/**
 	 * 找出最为适合的nodeItem节点
 	 * 即分数最低的nodeItem节点
-	 * @param nodeSet
+	 * 同时，忽略所有损坏的nodeItem
+	 * @param nodeMap
 	 * @return
 	 */
-	public static NodeItem getNodeItem(ConcurrentSkipListSet<NodeItem> nodeSet)
+	public static NodeItem getNodeItem(ConcurrentHashMap<String, NodeItem> nodeMap)
 	{
 		NodeItem selectedNodeItem = null;
 		int minGrade = Integer.MAX_VALUE;
 		
-		for (NodeItem node : nodeSet) {
-			if(minGrade > node.getQueueLength())
+		for(String nodeId : nodeMap.keySet())
+		{
+			NodeItem nodeItem = nodeMap.get(nodeId);
+			//忽略损坏的nodeItem
+			if(nodeItem.isBroken() == false)
 			{
-				minGrade = node.getQueueLength();
-				selectedNodeItem = node;
+				if(minGrade > nodeItem.getGrade())
+				{
+					minGrade = nodeItem.getGrade();
+					selectedNodeItem = nodeItem;
+				}
 			}
 		}
-		
 		return selectedNodeItem;
+
 	}
 	
 	

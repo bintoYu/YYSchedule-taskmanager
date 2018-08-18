@@ -9,8 +9,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import com.YYSchedule.store.ftp.FtpConnFactory;
+import com.YYSchedule.store.service.JobBasicService;
+import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskResultService;
+import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.task.config.Config;
+import com.YYSchedule.task.mapper.ResultStatusMapper;
 
 /**
  * @author ybt
@@ -31,10 +35,22 @@ public class ResultQueueConsumer
 	private FtpConnFactory ftpConnFactory;
 	
 	@Autowired
+	private TaskBasicService taskBasicService;
+	
+	@Autowired
 	private TaskResultService taskResultService;
 	
 	@Autowired
+	private JobBasicService jobBasicService;
+	
+	@Autowired
+	private TaskTimestampService taskTimestampService;
+	
+	@Autowired
 	private ThreadPoolTaskExecutor threadPoolExecutor;
+	
+	@Autowired
+	private ResultStatusMapper resultStatusMapper;
 	
 	public void startThreadPool()
 	{
@@ -42,7 +58,7 @@ public class ResultQueueConsumer
 		
 		for(int i = 0; i < task_consumer_thread_num; i++)
 		{
-			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(config, jmsTemplate,taskResultService);
+			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(config, jmsTemplate, taskBasicService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper);
 			threadPoolExecutor.execute(resultQueueConsumerThread);
 		}
 	}

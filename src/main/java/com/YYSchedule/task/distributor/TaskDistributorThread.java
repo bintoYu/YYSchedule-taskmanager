@@ -85,7 +85,7 @@ public class TaskDistributorThread implements Runnable {
 			TaskBasic taskBasic = new TaskBasic();
 			taskBasic.setTaskId(task.getTaskId());
 			taskBasic.setTaskStatus(task.getTaskStatus().toString());
-			taskBasic.setExecutorId(task.getExecutorId());
+			taskBasic.setNodeId(task.getExecutorId());
 			taskBasicService.updateTaskBasic(taskBasic);
 		}
 	}

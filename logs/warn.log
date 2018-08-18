@@ -704,3 +704,1089 @@ org.apache.thrift.protocol.TProtocolException: Required field 'engineLoggerList'
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
+5373  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+5754  - Failed to startup UserCallTask Server at port : 6000 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$1.startUpUserCallTaskService(StartUp.java:64)
+	at com.YYSchedule.task.start.StartUp$1.run(StartUp.java:57)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+5755  - Failed to startup NodeCallTask Server at port : 6010 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$2.startUpNodeCallTaskService(StartUp.java:93)
+	at com.YYSchedule.task.start.StartUp$2.run(StartUp.java:86)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+2983  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3115  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+22563709 - Failed to save jobBasic or jobStatus into database : com.YYSchedule.common.mybatis.pojo.JobBasic@75d2a0d0, com.YYSchedule.common.mybatis.pojo.JobStatus@573bf41e : 
+### Error updating database.  Cause: java.sql.SQLException: Field 'committed_time' doesn't have a default value
+### The error may involve com.YYSchedule.store.mapper.JobBasicMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into job_basic      ( job_id,                       job_priority,                       task_phase )       values ( ?,                       ?,                       ? )
+### Cause: java.sql.SQLException: Field 'committed_time' doesn't have a default value
+; SQL []; Field 'committed_time' doesn't have a default value; nested exception is java.sql.SQLException: Field 'committed_time' doesn't have a default value
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLException: Field 'committed_time' doesn't have a default value
+### The error may involve com.YYSchedule.store.mapper.JobBasicMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into job_basic      ( job_id,                       job_priority,                       task_phase )       values ( ?,                       ?,                       ? )
+### Cause: java.sql.SQLException: Field 'committed_time' doesn't have a default value
+; SQL []; Field 'committed_time' doesn't have a default value; nested exception is java.sql.SQLException: Field 'committed_time' doesn't have a default value
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:243)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy9.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy24.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.JobBasicServiceImpl.insertJobBasic(JobBasicServiceImpl.java:48)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy25.insertJobBasic(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:137)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:479)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Field 'committed_time' doesn't have a default value
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.GeneratedMethodAccessor7.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy34.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.GeneratedMethodAccessor16.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+22564389 - 从队列192.168.2.91:6010:resultQueue中获取Context失败！
+22564389 - 从队列192.168.2.91:6010:resultQueue取Task失败！从队列192.168.2.91:6010:resultQueue中获取Context失败！
+3100  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3075  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3121  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3029  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2946  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4166  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3056  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3549  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3420  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3401  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3308  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2482  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'resultQueueConsumer': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:8)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:14)
+	at com.YYSchedule.task.start.StartUp.main(StartUp.java:111)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 15 more
+Caused by: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1317)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:622)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:591)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1386)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:434)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:412)
+	at org.springframework.beans.factory.BeanFactoryUtils.beanNamesForTypeIncludingAncestors(BeanFactoryUtils.java:187)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1112)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 17 more
+Caused by: java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:249)
+	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:395)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doResolveBeanClass(AbstractBeanFactory.java:1338)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1309)
+	... 27 more
+1803  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'resultQueueConsumer': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:8)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:14)
+	at com.YYSchedule.task.start.StartUp.main(StartUp.java:111)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 15 more
+Caused by: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1317)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:622)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:591)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1386)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:434)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:412)
+	at org.springframework.beans.factory.BeanFactoryUtils.beanNamesForTypeIncludingAncestors(BeanFactoryUtils.java:187)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1112)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 17 more
+Caused by: java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:249)
+	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:395)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doResolveBeanClass(AbstractBeanFactory.java:1338)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1309)
+	... 27 more
+1938  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'resultQueueConsumer': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:8)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:14)
+	at com.YYSchedule.task.start.StartUp.main(StartUp.java:111)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 15 more
+Caused by: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1317)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:622)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:591)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1386)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:434)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:412)
+	at org.springframework.beans.factory.BeanFactoryUtils.beanNamesForTypeIncludingAncestors(BeanFactoryUtils.java:187)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1112)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 17 more
+Caused by: java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:249)
+	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:395)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doResolveBeanClass(AbstractBeanFactory.java:1338)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1309)
+	... 27 more
+3325  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'resultQueueConsumer': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'Config': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private int com.YYSchedule.task.config.Config.heartbeat_time; nested exception is org.springframework.beans.factory.BeanExpressionException: Expression parsing failed; nested exception is org.springframework.expression.spel.SpelEvaluationException: EL1008E:(pos 7): Property or field 'heartbeat_time' cannot be found on object of type 'java.util.Properties' - maybe not public?
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:83)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:9)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:15)
+	at com.YYSchedule.task.start.StartUp.main(StartUp.java:111)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'Config': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private int com.YYSchedule.task.config.Config.heartbeat_time; nested exception is org.springframework.beans.factory.BeanExpressionException: Expression parsing failed; nested exception is org.springframework.expression.spel.SpelEvaluationException: EL1008E:(pos 7): Property or field 'heartbeat_time' cannot be found on object of type 'java.util.Properties' - maybe not public?
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 15 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'Config': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private int com.YYSchedule.task.config.Config.heartbeat_time; nested exception is org.springframework.beans.factory.BeanExpressionException: Expression parsing failed; nested exception is org.springframework.expression.spel.SpelEvaluationException: EL1008E:(pos 7): Property or field 'heartbeat_time' cannot be found on object of type 'java.util.Properties' - maybe not public?
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1127)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 17 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private int com.YYSchedule.task.config.Config.heartbeat_time; nested exception is org.springframework.beans.factory.BeanExpressionException: Expression parsing failed; nested exception is org.springframework.expression.spel.SpelEvaluationException: EL1008E:(pos 7): Property or field 'heartbeat_time' cannot be found on object of type 'java.util.Properties' - maybe not public?
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 28 more
+Caused by: org.springframework.beans.factory.BeanExpressionException: Expression parsing failed; nested exception is org.springframework.expression.spel.SpelEvaluationException: EL1008E:(pos 7): Property or field 'heartbeat_time' cannot be found on object of type 'java.util.Properties' - maybe not public?
+	at org.springframework.context.expression.StandardBeanExpressionResolver.evaluate(StandardBeanExpressionResolver.java:164)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.evaluateBeanDefinitionString(AbstractBeanFactory.java:1354)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:964)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 30 more
+Caused by: org.springframework.expression.spel.SpelEvaluationException: EL1008E:(pos 7): Property or field 'heartbeat_time' cannot be found on object of type 'java.util.Properties' - maybe not public?
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference.readProperty(PropertyOrFieldReference.java:226)
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference.getValueInternal(PropertyOrFieldReference.java:93)
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference.access$000(PropertyOrFieldReference.java:46)
+	at org.springframework.expression.spel.ast.PropertyOrFieldReference$AccessorLValue.getValue(PropertyOrFieldReference.java:372)
+	at org.springframework.expression.spel.ast.CompoundExpression.getValueInternal(CompoundExpression.java:88)
+	at org.springframework.expression.spel.ast.SpelNodeImpl.getValue(SpelNodeImpl.java:120)
+	at org.springframework.expression.spel.standard.SpelExpression.getValue(SpelExpression.java:242)
+	at org.springframework.context.expression.StandardBeanExpressionResolver.evaluate(StandardBeanExpressionResolver.java:161)
+	... 34 more
+3307  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+1949  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'resultQueueConsumer': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:8)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:15)
+	at com.YYSchedule.task.start.StartUp.main(StartUp.java:111)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: private com.YYSchedule.task.config.Config com.YYSchedule.task.consumer.ResultQueueConsumer.config; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 15 more
+Caused by: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean] for bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]; nested exception is java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1317)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:622)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:591)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1386)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:434)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:412)
+	at org.springframework.beans.factory.BeanFactoryUtils.beanNamesForTypeIncludingAncestors(BeanFactoryUtils.java:187)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1112)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 17 more
+Caused by: java.lang.ClassNotFoundException: org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:249)
+	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:395)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doResolveBeanClass(AbstractBeanFactory.java:1338)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1309)
+	... 27 more
+3227  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3304  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+13058 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:86)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+28014 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:86)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3208  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+13963 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:86)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3691  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4056  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3830  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4027  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3824  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3865  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3310  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4147  - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+14237 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3213  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3380  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3679  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4540  - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+9533  - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+24522 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+39530 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+54526 - Error occurred during processing of message.
+java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.NodeItemMapper.getNode(NodeItemMapper.java:114)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:85)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3593  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3393  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+4569  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+8534  - 没有合适的node给task [ 1000017010001 ]  ,taskPhase: COMMON
+8534  - 分发task失败！ taskId: [ 1000017010001 ]没有合适的node给task [ 1000017010001 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000017010001 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+8534  - 没有合适的node给task [ 1000017010002 ]  ,taskPhase: COMMON
+8534  - 分发task失败！ taskId: [ 1000017010002 ]没有合适的node给task [ 1000017010002 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000017010002 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3871  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3111  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3508  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+5448  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+41053 - 没有合适的node给task [ 1000023010001 ]  ,taskPhase: COMMON
+41053 - 分发task失败！ taskId: [ 1000023010001 ]没有合适的node给task [ 1000023010001 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000023010001 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+41053 - 没有合适的node给task [ 1000023010002 ]  ,taskPhase: COMMON
+41084 - 分发task失败！ taskId: [ 1000023010002 ]没有合适的node给task [ 1000023010002 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000023010002 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+80690 - 没有合适的node给task [ 1000024010001 ]  ,taskPhase: COMMON
+80690 - 分发task失败！ taskId: [ 1000024010001 ]没有合适的node给task [ 1000024010001 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000024010001 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+80690 - 没有合适的node给task [ 1000024010002 ]  ,taskPhase: COMMON
+80690 - 分发task失败！ taskId: [ 1000024010002 ]没有合适的node给task [ 1000024010002 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000024010002 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3130  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+129862 - 没有合适的node给task [ 1000025010001 ]  ,taskPhase: COMMON
+129877 - 分发task失败！ taskId: [ 1000025010001 ]没有合适的node给task [ 1000025010001 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000025010001 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+129877 - 没有合适的node给task [ 1000025010002 ]  ,taskPhase: COMMON
+129877 - 分发task失败！ taskId: [ 1000025010002 ]没有合适的node给task [ 1000025010002 ]  ,taskPhase: COMMON
+java.lang.Exception: 没有合适的node给task [ 1000025010002 ]  ,taskPhase: COMMON
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:62)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+3358  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+35222 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+35222 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+95230 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+95230 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+3436  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3379  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3499  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+3235  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+118684 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.ArithmeticException: / by zero
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.ArithmeticException: / by zero
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+118687 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.ArithmeticException: / by zero]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.ArithmeticException: / by zero
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.ArithmeticException: / by zero
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+3449  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+109941 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+109943 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+409929 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+409930 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+709930 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+709935 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1009930 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1009931 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1309930 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1309931 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1609957 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1609958 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1909930 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+1909931 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+2209929 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+2209930 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+2509929 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+2509930 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+2809930 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+2809931 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+3109931 - Job DEFAULT.NodeStatusMonitorJob threw an unhandled Exception: 
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+3109932 - Job (DEFAULT.NodeStatusMonitorJob threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'monitor' on target class [class com.YYSchedule.task.monitor.NodeStatusMonitor] failed; nested exception is java.lang.NullPointerException
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:266)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 more
+Caused by: java.lang.NullPointerException
+	at com.YYSchedule.task.mapper.ResultStatusMapper.getResultSet(ResultStatusMapper.java:80)
+	at com.YYSchedule.task.monitor.NodeStatusMonitor.monitor(NodeStatusMonitor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:269)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
+	... 3 more
+3857  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE

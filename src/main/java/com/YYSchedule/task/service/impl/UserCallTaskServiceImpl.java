@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.PriorityBlockingQueue;
 
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.YYSchedule.common.mybatis.pojo.JobBasic;
-import com.YYSchedule.common.mybatis.pojo.JobStatus;
 import com.YYSchedule.common.mybatis.pojo.MissionBasic;
 import com.YYSchedule.common.mybatis.pojo.MissionJob;
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
@@ -26,7 +24,6 @@ import com.YYSchedule.common.rpc.domain.job.Job;
 import com.YYSchedule.common.rpc.domain.job.JobPriority;
 import com.YYSchedule.common.rpc.domain.mission.Mission;
 import com.YYSchedule.common.rpc.domain.node.NodePayload;
-import com.YYSchedule.common.rpc.domain.node.NodeRuntime;
 import com.YYSchedule.common.rpc.domain.task.TaskPhase;
 import com.YYSchedule.common.rpc.exception.InvalidRequestException;
 import com.YYSchedule.common.rpc.exception.NotFoundException;
@@ -34,9 +31,7 @@ import com.YYSchedule.common.rpc.exception.TimeoutException;
 import com.YYSchedule.common.rpc.exception.UnavailableException;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;
 import com.YYSchedule.common.utils.Bean2BeanUtils;
-import com.YYSchedule.store.ftp.FtpConnFactory;
 import com.YYSchedule.store.service.JobBasicService;
-import com.YYSchedule.store.service.JobStatusService;
 import com.YYSchedule.store.service.MissionBasicService;
 import com.YYSchedule.store.service.MissionJobService;
 import com.YYSchedule.store.service.TaskBasicService;
@@ -46,7 +41,7 @@ import com.YYSchedule.store.service.UserBasicService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.JobMapper;
 import com.YYSchedule.task.mapper.MissionMapper;
-import com.YYSchedule.task.mapper.NodeMapper;
+import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.queue.PriorityTaskQueueProducer;
 import com.YYSchedule.task.queue.TaskQueue;
 import com.YYSchedule.task.utils.JobSplitter;
@@ -87,7 +82,6 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		JobMapper jobMapper = applicationContext.getBean(JobMapper.class);
 		MissionBasicService missionBasicService = applicationContext.getBean(MissionBasicService.class);
 		JobBasicService jobBasicService = applicationContext.getBean(JobBasicService.class);
-		JobStatusService jobStatusService = applicationContext.getBean(JobStatusService.class);
 		MissionJobService missionJobService = applicationContext.getBean(MissionJobService.class);
 		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
 		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class);
@@ -130,12 +124,10 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 			priorityTaskQueueRunner.start();
 			
 			//最后存储job的信息
-			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job);
-			JobStatus jobStatus = Bean2BeanUtils.Job2JobStatus(job,taskList.size());
+			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job,taskList.size());
 			try
 			{
 				jobBasicService.insertJobBasic(jobBasic);
-				jobStatusService.insertJobStatus(jobStatus);
 				
 				//将missionId-jobId对应关系存入数据库
 				MissionJob missionJob = new MissionJob();
@@ -143,8 +135,8 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 				missionJob.setJobId(jobId);
 				missionJobService.insertMissionJob(missionJob);
 			}catch(Exception e) {
-				LOGGER.error("Failed to save jobBasic or jobStatus into database : " + jobBasic + ", " + jobStatus + " : " + e.getMessage(), e);
-				throw new UnavailableException("Failed to save jobBasic or jobStatus into database : " + jobBasic + ", " + jobStatus + " : " + e.getMessage());
+				LOGGER.error("无法将jobBasic存入数据库: " + jobBasic +  " : " + e.getMessage(), e);
+				throw new UnavailableException("无法将jobBasic存入数据库: " + jobBasic +  " : " + e.getMessage());
 			} 
 			
 		}
@@ -226,19 +218,12 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		
 		/****************获取NodeMapper(taskmanager存储node节点信息的容器)******************/
 		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
-		NodeMapper nodeMapper = applicationContext.getBean(NodeMapper.class);
-		Map<TaskPhase, ConcurrentSkipListSet<NodeItem>> nodeMap = nodeMapper.getNodeMap();
+		NodeItemMapper nodeMapper = applicationContext.getBean(NodeItemMapper.class);
+		List<NodeItem> nodeItemList = nodeMapper.getAllNode();
 		
-		/*************************遍历nodeMap************************/
-		for(TaskPhase taskPhase : nodeMap.keySet())
-		{
-			ConcurrentSkipListSet<NodeItem> concurrentSkipListSet = nodeMap.get(taskPhase);
-			for(NodeItem nodeItem : concurrentSkipListSet)
-			{
-				NodePayload nodePayload = Bean2BeanUtils.nodeItem2NodePayload(nodeItem);
-				
-				nodePayloadList.add(nodePayload);
-			}
+		for (NodeItem nodeItem : nodeItemList) {
+			NodePayload nodePayload = Bean2BeanUtils.nodeItem2NodePayload(nodeItem);
+			nodePayloadList.add(nodePayload);
 		}
 		
 		return nodePayloadList;

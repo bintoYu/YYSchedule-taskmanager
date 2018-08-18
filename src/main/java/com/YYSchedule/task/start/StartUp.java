@@ -8,6 +8,7 @@ import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.YYSchedule.common.rpc.service.task.NodeCallTaskService;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;

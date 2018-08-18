@@ -16,6 +16,7 @@ import com.YYSchedule.common.mybatis.pojo.TaskBasic;
 import com.YYSchedule.common.mybatis.pojo.TaskResult;
 import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
 import com.YYSchedule.common.pojo.NodeItem;
+import com.YYSchedule.common.rpc.domain.engine.EngineLogger;
 import com.YYSchedule.common.rpc.domain.node.NodePayload;
 import com.YYSchedule.common.rpc.domain.task.TaskPhase;
 import com.YYSchedule.common.rpc.domain.task.TaskStatus;
@@ -28,49 +29,47 @@ import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
-import com.YYSchedule.task.mapper.NodeMapper;
+import com.YYSchedule.task.mapper.NodeItemMapper;
 
 /**
  * @author ybt
- *
- * @date 2018年7月18日  
- * @version 1.0  
+ * 
+ * @date 2018年7月18日
+ * @version 1.0
  */
 public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(NodeCallTaskServiceImpl.class);
-	
-	
-	/* (non-Javadoc)
-	 * @see com.YYSchedule.common.rpc.service.task.NodeCallTaskService.Iface#registerNode(com.YYSchedule.common.rpc.domain.node.NodeInfo)
+	private static final Logger LOGGER = LoggerFactory.getLogger(NodeCallTaskServiceImpl.class);
+
+	/*
+	 * 任务节点(node)向控制节点(taskmanager) 
+	 * 默认注册之前会将任务节点进行维修，因此可以直接更新nodeItem
 	 */
 	@Override
-	public int registerNode(NodePayload nodePayload) throws InvalidRequestException,
-			UnavailableException, TimeoutException, TException
+	public int registerNode(NodePayload nodePayload) throws InvalidRequestException, UnavailableException, TimeoutException, TException
 	{
-		int retValue = -1;
-
-		retValue = reportHeartbeat(nodePayload);
-		if (retValue >= 0) {
-			LOGGER.info("success to register node : " + nodePayload.getNodeId());
+		if (nodePayload == null || nodePayload.getNodeRuntime() == null) {
+			LOGGER.error("node[ " + nodePayload.getNodeId() + " ]心跳信息不合法.");
+			throw new InvalidRequestException("Invalid node payload [ " + nodePayload.getNodeId() + " ].");
 		}
-		else
-		{
-			LOGGER.error("failed to register node : " + nodePayload.getNodeId());
-		}
-		return retValue;
+		NodeItem nodeItem = new NodeItem(nodePayload);
+		nodeItem.setUpdatedTime(System.currentTimeMillis());
+		
+		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
+		NodeItemMapper nodeMapper = applicationContext.getBean(NodeItemMapper.class);
+		nodeMapper.updateNode(nodeItem);
+		
+		LOGGER.info("成功注册任务节点: " + nodePayload.getNodeId());
+		
+		return 1;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.YYSchedule.common.rpc.service.task.NodeCallTaskService.Iface#reportHeartbeat(com.YYSchedule.common.rpc.domain.node.NodePayload)
+	
+	/*
+	 * 任务节点发送心跳信息 需要注意的是，如果任务节点已损坏,则保留老的心跳信息，不替换新的心跳信息
 	 */
 	@Override
-	public int reportHeartbeat(NodePayload nodePayload)
-			throws InvalidRequestException, UnavailableException,
-			TimeoutException, TException
+	public int reportHeartbeat(NodePayload nodePayload) throws InvalidRequestException, UnavailableException, TimeoutException, TException
 	{
-		int retCode = -1;
 		if (nodePayload == null || nodePayload.getNodeRuntime() == null) {
 			LOGGER.error("Invalid node payload [ " + nodePayload.getNodeId() + " ].");
 			throw new InvalidRequestException("Invalid node payload [ " + nodePayload.getNodeId() + " ].");
@@ -80,26 +79,33 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 		nodeItem.setUpdatedTime(System.currentTimeMillis());
 		
 		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
-		NodeMapper nodeMapper = applicationContext.getBean(NodeMapper.class);
-		nodeMapper.updateNode(nodeItem);
+		NodeItemMapper nodeMapper = applicationContext.getBean(NodeItemMapper.class);
 		
-		//插入或更新日志信息到数据库中
-		List<TaskResult> taskResultList = Bean2BeanUtils.engineLoggerList2TaskResultList(nodePayload.getEngineLoggerList());
-		TaskResultService taskResultService = applicationContext.getBean(TaskResultService.class);
-		taskResultService.updateTaskResultList(taskResultList);
-		
-		retCode = 0;
-		return retCode;
-	}
+		// 判断任务节点是否损坏,没有损坏才替换任务节点信息
+		NodeItem node = nodeMapper.getNode(nodeItem);
+		if(node == null)
+		{
+			nodeMapper.updateNode(nodeItem);
+		}
+		else if (!node.isBroken())
+		{
+			nodeMapper.updateNode(nodeItem);
+		}
 
-	/* (non-Javadoc)
-	 * @see com.YYSchedule.common.rpc.service.task.NodeCallTaskService.Iface#reportTaskExecutionStatus(java.lang.String, long, com.YYSchedule.common.rpc.domain.task.TaskPhase, com.YYSchedule.common.rpc.domain.task.TaskStatus)
-	 */
+		
+		// 插入或更新日志信息到数据库中
+		List<EngineLogger> engineLoggerList = nodePayload.getEngineLoggerList();
+		if (engineLoggerList != null) {
+			List<TaskResult> taskResultList = Bean2BeanUtils.engineLoggerList2TaskResultList(engineLoggerList);
+			TaskResultService taskResultService = applicationContext.getBean(TaskResultService.class);
+			taskResultService.updateTaskResultList(taskResultList);
+		}
+		return 0;
+	}
+	
+
 	@Override
-	public int reportTaskExecutionStatus(String nodeId, long taskId,
-			TaskPhase taskPhase, TaskStatus taskStatus)
-			throws InvalidRequestException, UnavailableException,
-			TimeoutException, TException
+	public int reportTaskExecutionStatus(String nodeId, long taskId, TaskPhase taskPhase, TaskStatus taskStatus) throws InvalidRequestException, UnavailableException, TimeoutException, TException
 	{
 		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
 		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
@@ -110,37 +116,23 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 		taskBasic.setTaskStatus(taskStatus.toString());
 		taskBasic.setLoadedTime(System.currentTimeMillis());
 		
-		//更新taskBasic
-		int result =  taskBasicService.updateTaskBasic(taskBasic);
+		// 更新taskBasic
+		int result = taskBasicService.updateTaskBasic(taskBasic);
 		
-		//更新taskTimestamp
+		// 更新taskTimestamp
 		TaskTimestamp taskTimestamp = new TaskTimestamp();
 		taskTimestamp.setTaskId(taskId);
-		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class); 
-		if(taskStatus == TaskStatus.RUNNING)
-		{
+		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class);
+		if (taskStatus == TaskStatus.RUNNING) {
 			taskTimestamp.setStartedTime(System.currentTimeMillis());
 			taskTimestampService.updateTaskTimestamp(taskTimestamp);
 		}
-		else if (taskStatus.equals(TaskStatus.FINISHED) || taskStatus.equals(TaskStatus.FAILURE) || taskStatus.equals(TaskStatus.INTERRUPTED) || taskStatus.equals(TaskStatus.TIMEOUT))
-		{
+		else if (taskStatus.equals(TaskStatus.FINISHED) || taskStatus.equals(TaskStatus.FAILURE) || taskStatus.equals(TaskStatus.INTERRUPTED) || taskStatus.equals(TaskStatus.TIMEOUT)) {
 			taskTimestamp.setFinishedTime(System.currentTimeMillis());
 			taskTimestampService.updateTaskTimestamp(taskTimestamp);
 		}
 		
 		return result;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.YYSchedule.common.rpc.service.task.NodeCallTaskService.Iface#submitResult(long, java.lang.String, java.nio.ByteBuffer)
-	 */
-	@Override
-	public int submitResult(long taskId, String result)
-			throws InvalidRequestException, UnavailableException,
-			TimeoutException, TException
-	{
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 }

@@ -24,6 +24,15 @@ public class Config
 	@Value("#{config.result_consumer_thread_num}")
 	private int result_consumer_thread_num;
 	
+	@Value("#{config.offline_monitor_interval}")
+	private int offline_monitor_interval;
+	
+	@Value("#{config.status_monitor_interval}")
+	private int status_monitor_interval;
+
+	@Value("#{config.node_success_rate}")
+	private double node_success_rate;
+	
 	public String getFtp_server_urls()
 	{
 		return ftp_server_urls;
@@ -54,5 +63,19 @@ public class Config
 		return result_consumer_thread_num;
 	}
 
-	
+	public int getOffline_monitor_interval()
+	{
+		return offline_monitor_interval;
+	}
+
+	public int getStatus_monitor_interval()
+	{
+		return status_monitor_interval;
+	}
+
+	public double getNode_success_rate()
+	{
+		return node_success_rate;
+	}
+
 }
