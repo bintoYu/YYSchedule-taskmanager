@@ -1,6 +1,8 @@
 package com.YYSchedule.task.monitor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.jms.JMSException;
 
@@ -12,6 +14,7 @@ import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.NodeItemMapper;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
 
 /**
  * @author ybt
@@ -26,6 +29,9 @@ public class NodeOffLineMonitor
 	
 	@Autowired
 	private NodeItemMapper nodeMapper;
+	
+	@Autowired
+	private PriorityTaskQueue priorityTaskQueue;
 	
 	@Autowired
 	private Config config;
@@ -62,6 +68,7 @@ public class NodeOffLineMonitor
 		boolean isRemoved = nodeMapper.removeNode(node);
 		if (isRemoved)
 		{
+			Set<Task> taskSet = new HashSet<Task>();
 			while (true)
 			{
 				Task task = new Task();
@@ -72,12 +79,14 @@ public class NodeOffLineMonitor
 					if (task == null)
 						break;
 	
-					ActiveMQUtils.sendTask(jmsTemplate, proirityTaskQueue, task);
+					taskSet.add(task);
 				} catch (JMSException e)
 				{
 					e.printStackTrace();
 				}
 			}
+			
+			priorityTaskQueue.addToPriorityTaskQueue(taskSet);
 			isCleared = true;
 		}
 		

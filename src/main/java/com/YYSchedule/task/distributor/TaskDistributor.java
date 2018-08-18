@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.task.config.Config;
-import com.YYSchedule.task.queue.TaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
 
 @Component("TaskDistributor")
 public class TaskDistributor
 {
 	@Autowired
-	private TaskQueue taskQueue;
+	private PriorityTaskQueue taskQueue;
 	@Autowired
 	private ThreadPoolTaskExecutor threadPoolExecutor;
 	@Autowired

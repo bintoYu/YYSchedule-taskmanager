@@ -19,7 +19,7 @@ import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.matcher.LoadBalancingMatcher;
-import com.YYSchedule.task.queue.TaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
  
 /**
  * 
@@ -47,7 +47,7 @@ public class TaskDistributorThread implements Runnable {
 	/**
 	 * 
 	 */
-	public TaskDistributorThread(TaskQueue taskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
+	public TaskDistributorThread(PriorityTaskQueue taskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
 		 this.priorityTaskQueue =taskQueue.getPriorityTaskQueue();
 		 this.taskTimestampService = taskTimestampService;
 		 this.taskBasicService = taskBasicService;

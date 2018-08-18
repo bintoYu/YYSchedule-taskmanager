@@ -2,8 +2,10 @@ package com.YYSchedule.task.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.thrift.TException;
@@ -43,7 +45,7 @@ import com.YYSchedule.task.mapper.JobMapper;
 import com.YYSchedule.task.mapper.MissionMapper;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.queue.PriorityTaskQueueProducer;
-import com.YYSchedule.task.queue.TaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
 import com.YYSchedule.task.utils.JobSplitter;
 
 /**
@@ -86,7 +88,7 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
 		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class);
 		TaskFileService taskFileService = applicationContext.getBean(TaskFileService.class);
-		TaskQueue taskQueue = applicationContext.getBean(TaskQueue.class);
+		PriorityTaskQueue priorityTaskQueue = applicationContext.getBean(PriorityTaskQueue.class);
 		
 		//生成missionId，并且将missionBasic信息存入数据库中
 		int missionId = missionMapper.generateMissionId(mission.getUserId());
@@ -119,9 +121,9 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 			taskTimestampService.insertTaskTimestampList(taskTimestampList);
 			
 			//将taskList放入PriorityTaskQueue中
-			PriorityTaskQueueProducer priorityTaskQueueProducer = new PriorityTaskQueueProducer(taskQueue, taskList);
-			Thread priorityTaskQueueRunner = new Thread(priorityTaskQueueProducer);
-			priorityTaskQueueRunner.start();
+			Set<Task> taskSet = new HashSet<Task>();
+			taskSet.addAll(taskList);
+			priorityTaskQueue.addToPriorityTaskQueue(taskSet);
 			
 			//最后存储job的信息
 			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job,taskList.size());

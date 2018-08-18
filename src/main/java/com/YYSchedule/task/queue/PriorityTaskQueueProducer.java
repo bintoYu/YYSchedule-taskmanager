@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.YYSchedule.common.pojo.Task;
 
-public class PriorityTaskQueueProducer implements Runnable {
+public class PriorityTaskQueueProducer {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(PriorityTaskQueueProducer.class);
 	
@@ -23,62 +23,51 @@ public class PriorityTaskQueueProducer implements Runnable {
 	
 	private List<Task> taskList;
 	
-	private TaskQueue taskQueue;
+	private PriorityTaskQueue taskQueue;
 	
 	/**
 	 * 
 	 */
-	public PriorityTaskQueueProducer(TaskQueue taskQueue) {
+	public PriorityTaskQueueProducer(PriorityTaskQueue taskQueue) {
 		this.taskQueue = taskQueue;
 		this.priorityTaskQueue = taskQueue.getPriorityTaskQueue();
 	}
 	
-	public PriorityTaskQueueProducer(TaskQueue taskQueue, Task task) {
+	public PriorityTaskQueueProducer(PriorityTaskQueue taskQueue, Task task) {
 		this.taskQueue = taskQueue;
 		this.priorityTaskQueue = taskQueue.getPriorityTaskQueue();
 		this.task = task;
 	}
 	
-	public PriorityTaskQueueProducer(TaskQueue taskQueue, List<Task> taskList) {
+	public PriorityTaskQueueProducer(PriorityTaskQueue taskQueue, List<Task> taskList) {
 		this.taskQueue = taskQueue;
 		this.priorityTaskQueue = taskQueue.getPriorityTaskQueue();;
 		this.taskList = taskList;
 		taskList = null;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
-	@Override
-	public void run() {
-		LOGGER.info("开启globalTaskQueue ...");
-		Set<Task> taskSet = produce();
-		
-		if(taskSet != null && taskSet.size() != 0 && priorityTaskQueue.addAll(taskSet)) {
-			LOGGER.info("成功更新globalTaskQueue, size : [ " + priorityTaskQueue.size() + " ].");
-		} else {
-			LOGGER.info("没有task放入globalTaskQueue中, size : [ " + priorityTaskQueue.size() + " ].");
-		}
-		taskSet = null;
-	}
 
 	/**
 	 * 将task或taskList存入taskQueue中
 	 * @return
 	 */
-	private Set<Task> produce() {
+	private boolean sendTaskToPriorityTaskQueue(Task task) {
 		
 		Set<Task> taskSet = new HashSet<Task>();
 		
-		// get upper bound of task num to be added
 		int limit = taskQueue.getMaxQueueSize();
 		if (task != null && !taskQueue.getTaskIdList().contains(task.getTaskId())) {
 			limit = limit - priorityTaskQueue.size() - 1;
 			taskSet.add(task);
-		} else if (taskList != null && taskList.size() != 0) {
-			limit = limit - priorityTaskQueue.size() - taskList.size();
-			taskSet.addAll(taskList);
+		} 
+		
+		if(taskSet != null && taskSet.size() != 0 && priorityTaskQueue.addAll(taskSet)) {
+			LOGGER.info("成功更新priorityTaskQueue, size : [ " + priorityTaskQueue.size() + " ].");
+		} else {
+			LOGGER.info("没有task放入priorityTaskQueue中, size : [ " + priorityTaskQueue.size() + " ].");
 		}
+		taskSet = null;
+		
 		return taskSet;
 	}
 

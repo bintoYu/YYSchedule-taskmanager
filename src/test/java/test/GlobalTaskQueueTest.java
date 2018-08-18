@@ -14,7 +14,7 @@ import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.distributor.TaskDistributor;
 import com.YYSchedule.task.distributor.TaskDistributorThread;
 import com.YYSchedule.task.queue.PriorityTaskQueueProducer;
-import com.YYSchedule.task.queue.TaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
 
 public class GlobalTaskQueueTest
 {
@@ -33,7 +33,7 @@ public class GlobalTaskQueueTest
 			
 		}
 		
-		TaskQueue taskQueue = applicationContext.getBean(TaskQueue.class);
+		PriorityTaskQueue taskQueue = applicationContext.getBean(PriorityTaskQueue.class);
 		PriorityTaskQueueProducer globalTaskQueueProducer = new PriorityTaskQueueProducer(taskQueue, taskList);
 		Thread globalTaskQueueRunner = new Thread(globalTaskQueueProducer);
 		globalTaskQueueRunner.start();

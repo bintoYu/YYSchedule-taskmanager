@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,8 +19,10 @@ import com.YYSchedule.common.pojo.Task;
 
 @Component
 @Scope("singleton")
-public class TaskQueue {
+public class PriorityTaskQueue {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(PriorityTaskQueue.class);
+	
 	private PriorityBlockingQueue<Task> priorityTaskQueue = new PriorityBlockingQueue<Task>();
 	
 //	private BlockingQueue<FailureTaskMapper> failureTaskQueue = new BlockingQueue<FailureTaskMapper>();
@@ -29,7 +33,7 @@ public class TaskQueue {
 	/**
 	 * 
 	 */
-	private TaskQueue() {
+	private PriorityTaskQueue() {
 	}
 	
 	
@@ -46,19 +50,35 @@ public class TaskQueue {
 //		return failureTaskQueue;
 //	}
 	
-	public synchronized boolean addToPriorityTaskQueue(Task task) {
+	public synchronized void addToPriorityTaskQueue(Task task) {
 		if(priorityTaskQueue.size() <= MAX_QUEUE_SIZE-2){
-			return priorityTaskQueue.add(task);
+			boolean isAdded = priorityTaskQueue.add(task);
+			if(isAdded)
+			{
+				LOGGER.info("成功更新priorityTaskQueue, size : [ " + priorityTaskQueue.size() + " ].");
+			}
+			else
+			{
+				LOGGER.error("无法将task放入priorityTaskQueue中, size : [ " + priorityTaskQueue.size() + " ].");
+			}
 		}else{
-			return false;
+			LOGGER.error("priorityTaskQueue超过最大容量, size : [ " + priorityTaskQueue.size() + " ].");
 		}
 	}
 	
-	public synchronized boolean addToPriorityTaskQueue(Set<Task> taskSet) {
+	public synchronized void addToPriorityTaskQueue(Set<Task> taskSet) {
 		if(priorityTaskQueue.size() <= MAX_QUEUE_SIZE-taskSet.size()-1){
-			return priorityTaskQueue.addAll(taskSet);
+			boolean isAdded =  priorityTaskQueue.addAll(taskSet);
+			if(isAdded)
+			{
+				LOGGER.info("成功更新priorityTaskQueue, size : [ " + priorityTaskQueue.size() + " ].");
+			}
+			else
+			{
+				LOGGER.error("无法将task放入priorityTaskQueue中, size : [ " + priorityTaskQueue.size() + " ].");
+			}
 		}else{
-			return false;
+			LOGGER.error("priorityTaskQueue超过最大容量, size : [ " + priorityTaskQueue.size() + " ].");
 		}
 	}
 	
