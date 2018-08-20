@@ -58,15 +58,15 @@ public class NodeStatusMonitor
 	
 	/**
 	 * 每5（配置文件设置）秒监测一次所有任务节点
-	 * 查看任务节点在15分钟内的成功率
-	 * 如果在15分钟内某个任务节点的成功率突然降到了很低的程度
-	 * 我们便可认为该任务节点已损坏
+	 * 一个任务节点损坏，需要满足以下条件：
+	 * 1、5分钟内所执行的任务数高于3个
+	 * 2、5分钟内所执行的任务成功率低于一定临界值
 	 */
 	public void monitor()
 	{
 		List<NodeItem> allNode = nodeItemMapper.getAllNode();
 		long endTime = System.currentTimeMillis();
-		long startTime = endTime - 3 * 60 * config.getStatus_monitor_interval();
+		long startTime = endTime - 60 * config.getStatus_monitor_interval();
 		
 		for (NodeItem nodeItem : allNode) {
 			if (!nodeItem.isBroken()) {
@@ -85,7 +85,7 @@ public class NodeStatusMonitor
 					// 如果成功率过低（配置文件配置）,标记为坏掉的节点
 					//如果只执行了任务且失败，我们不认为节点损坏
 					double successRate = success / sum;
-					if (successRate <= config.getNode_success_rate() && sum > 1) {
+					if (successRate <= config.getNode_success_rate() && sum > 3) {
 						nodeItem.setBroken(true);
 						nodeItemMapper.updateNode(nodeItem);
 						LOGGER.info("将任务节点 [ " + nodeItem.getNodeId() + " ] 标记为已损坏.");
