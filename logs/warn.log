@@ -1790,3 +1790,5 @@ Caused by: java.lang.NullPointerException
 	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:257)
 	... 3 more
 3857  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.TaskQueue.MAX_QUEUE_SIZE
+2441  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+2323  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE

@@ -43,7 +43,8 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 
 	/*
 	 * 任务节点(node)向控制节点(taskmanager) 
-	 * 默认注册之前会将任务节点进行维修，因此可以直接更新nodeItem
+	 * 默认注册之前会将任务节点进行维修，因此重启任务节点时，
+	 * 无论之前该节点是否损坏，都会直接覆盖新的没有损坏的nodeItem
 	 */
 	@Override
 	public int registerNode(NodePayload nodePayload) throws InvalidRequestException, UnavailableException, TimeoutException, TException
@@ -65,7 +66,8 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 	}
 	
 	/*
-	 * 任务节点发送心跳信息 需要注意的是，如果任务节点已损坏,则保留老的心跳信息，不替换新的心跳信息
+	 * 任务节点发送心跳信息 
+	 * 需要注意的是：由于新的心跳信息不包含“是否损坏”这一信息，因此需要进行更换
 	 */
 	@Override
 	public int reportHeartbeat(NodePayload nodePayload) throws InvalidRequestException, UnavailableException, TimeoutException, TException
@@ -81,17 +83,13 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 		AbstractApplicationContext applicationContext = ApplicationContextHandler.getInstance().getApplicationContext();
 		NodeItemMapper nodeMapper = applicationContext.getBean(NodeItemMapper.class);
 		
-		// 判断任务节点是否损坏,没有损坏才替换任务节点信息
-		NodeItem node = nodeMapper.getNode(nodeItem);
-		if(node == null)
+		// 由于新的心跳信息不包含“是否损坏”这一信息，因此需要进行重新设置
+		NodeItem oldNode = nodeMapper.getNode(nodeItem);
+		if(oldNode !=null)
 		{
-			nodeMapper.updateNode(nodeItem);
+			nodeItem.setBroken(oldNode.isBroken());
 		}
-		else if (!node.isBroken())
-		{
-			nodeMapper.updateNode(nodeItem);
-		}
-
+		nodeMapper.updateNode(nodeItem);
 		
 		// 插入或更新日志信息到数据库中
 		List<EngineLogger> engineLoggerList = nodePayload.getEngineLoggerList();

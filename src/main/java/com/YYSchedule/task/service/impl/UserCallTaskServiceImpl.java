@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
@@ -44,7 +42,6 @@ import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.JobMapper;
 import com.YYSchedule.task.mapper.MissionMapper;
 import com.YYSchedule.task.mapper.NodeItemMapper;
-import com.YYSchedule.task.queue.PriorityTaskQueueProducer;
 import com.YYSchedule.task.queue.PriorityTaskQueue;
 import com.YYSchedule.task.utils.JobSplitter;
 

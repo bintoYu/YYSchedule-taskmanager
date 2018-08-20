@@ -57,10 +57,6 @@ public class PriorityTaskQueue {
 			{
 				LOGGER.info("成功更新priorityTaskQueue, size : [ " + priorityTaskQueue.size() + " ].");
 			}
-			else
-			{
-				LOGGER.error("无法将task放入priorityTaskQueue中, size : [ " + priorityTaskQueue.size() + " ].");
-			}
 		}else{
 			LOGGER.error("priorityTaskQueue超过最大容量, size : [ " + priorityTaskQueue.size() + " ].");
 		}
@@ -72,10 +68,6 @@ public class PriorityTaskQueue {
 			if(isAdded)
 			{
 				LOGGER.info("成功更新priorityTaskQueue, size : [ " + priorityTaskQueue.size() + " ].");
-			}
-			else
-			{
-				LOGGER.error("无法将task放入priorityTaskQueue中, size : [ " + priorityTaskQueue.size() + " ].");
 			}
 		}else{
 			LOGGER.error("priorityTaskQueue超过最大容量, size : [ " + priorityTaskQueue.size() + " ].");

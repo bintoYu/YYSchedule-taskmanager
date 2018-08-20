@@ -98,6 +98,7 @@ public class ResultQueueConsumerThread implements Runnable
 				resultStatusMapper.updateResultStatus(resultStatus);
 				
 				//TODO 将result发送到redis中
+				
 			}
 		}
 	}

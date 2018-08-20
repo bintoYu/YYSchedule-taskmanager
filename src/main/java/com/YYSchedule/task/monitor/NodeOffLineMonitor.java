@@ -8,6 +8,7 @@ import javax.jms.JMSException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.stereotype.Component;
 
 import com.YYSchedule.common.pojo.NodeItem;
 import com.YYSchedule.common.pojo.Task;
@@ -22,6 +23,7 @@ import com.YYSchedule.task.queue.PriorityTaskQueue;
  * @date 2018年8月13日
  * @version 1.0
  */
+@Component("NodeOffLineMonitor")
 public class NodeOffLineMonitor
 {
 	@Autowired
@@ -64,7 +66,6 @@ public class NodeOffLineMonitor
 	{
 		boolean isCleared = false;
 		String queue = node.getNodeId() + ":distributeTaskQueue";
-		String proirityTaskQueue = "";
 		boolean isRemoved = nodeMapper.removeNode(node);
 		if (isRemoved)
 		{
