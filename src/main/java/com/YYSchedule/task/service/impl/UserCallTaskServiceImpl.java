@@ -16,6 +16,7 @@ import com.YYSchedule.common.mybatis.pojo.MissionBasic;
 import com.YYSchedule.common.mybatis.pojo.MissionJob;
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
 import com.YYSchedule.common.mybatis.pojo.TaskFile;
+import com.YYSchedule.common.mybatis.pojo.TaskTemp;
 import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
 import com.YYSchedule.common.mybatis.pojo.UserBasic;
 import com.YYSchedule.common.pojo.NodeItem;
@@ -36,6 +37,7 @@ import com.YYSchedule.store.service.MissionBasicService;
 import com.YYSchedule.store.service.MissionJobService;
 import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskFileService;
+import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.store.service.UserBasicService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
@@ -85,6 +87,7 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
 		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class);
 		TaskFileService taskFileService = applicationContext.getBean(TaskFileService.class);
+		TaskTempService taskTempService = applicationContext.getBean(TaskTempService.class);
 		PriorityTaskQueue priorityTaskQueue = applicationContext.getBean(PriorityTaskQueue.class);
 		
 		//生成missionId，并且将missionBasic信息存入数据库中
@@ -109,13 +112,17 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 			List<TaskBasic> taskBasicList;
 			List<TaskFile> taskFileList;
 			List<TaskTimestamp> taskTimestampList;
+			List<TaskTemp> taskTempList; 
 			taskList = JobSplitter.split(job, fileList, mission.getUserId());
 			taskBasicList = Bean2BeanUtils.taskList2TaskBasicList(taskList);
 			taskFileList = Bean2BeanUtils.taskList2TaskFileList(taskList);
 			taskTimestampList = Bean2BeanUtils.taskList2TaskTimestampList(taskList);
+			taskTempList = Bean2BeanUtils.taskList2TaskTempList(taskList);
+			
 			taskBasicService.insertTaskBasicList(taskBasicList);
 			taskFileService.insertTaskFileList(taskFileList);
 			taskTimestampService.insertTaskTimestampList(taskTimestampList);
+			taskTempService.insertTaskTempList(taskTempList);
 			
 			//将taskList放入PriorityTaskQueue中
 			Set<Task> taskSet = new HashSet<Task>();

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import com.YYSchedule.store.ftp.FtpConnFactory;
 import com.YYSchedule.store.service.JobBasicService;
 import com.YYSchedule.store.service.TaskBasicService;
-import com.YYSchedule.store.service.TaskFileService;
 import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.task.config.Config;
@@ -25,7 +24,7 @@ import com.YYSchedule.task.queue.FailureResultQueue;
  * @version 1.0
  */
 @Component
-public class ResultQueueConsumer
+public class FailureResultConsumer
 {
 	@Autowired
 	private Config config;
@@ -38,9 +37,6 @@ public class ResultQueueConsumer
 	
 	@Autowired
 	private TaskBasicService taskBasicService;
-	
-	@Autowired
-	private TaskFileService taskFileService;
 	
 	@Autowired
 	private TaskResultService taskResultService;
@@ -66,8 +62,8 @@ public class ResultQueueConsumer
 		
 		for(int i = 0; i < task_consumer_thread_num; i++)
 		{
-			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(config,ftpConnFactory, jmsTemplate, taskBasicService, taskFileService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
-			threadPoolExecutor.execute(resultQueueConsumerThread);
+			FailureResultConsumerThread failureResultConsumerThread = new FailureResultConsumerThread(config, jmsTemplate, taskBasicService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
+			threadPoolExecutor.execute(failureResultConsumerThread);
 		}
 	}
 }
