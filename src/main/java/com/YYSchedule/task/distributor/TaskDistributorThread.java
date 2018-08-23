@@ -32,7 +32,7 @@ public class TaskDistributorThread implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaskDistributorThread.class);
 	
-	private BlockingQueue<Task> priorityTaskQueue;
+	private PriorityTaskQueue priorityTaskQueue;
 	
 	private String distributeTaskQueue;
 	
@@ -47,8 +47,8 @@ public class TaskDistributorThread implements Runnable {
 	/**
 	 * 
 	 */
-	public TaskDistributorThread(PriorityTaskQueue taskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
-		 this.priorityTaskQueue =taskQueue.getPriorityTaskQueue();
+	public TaskDistributorThread(PriorityTaskQueue priorityTaskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
+		 this.priorityTaskQueue = priorityTaskQueue;
 		 this.taskTimestampService = taskTimestampService;
 		 this.taskBasicService = taskBasicService;
 		 this.jmsTemplate = jmsTemplate;
@@ -61,7 +61,7 @@ public class TaskDistributorThread implements Runnable {
 			Task task = null;
 			try {
 				//从TaskQueue中获取Task，并存到DistributeTaskQueue中
-				task = priorityTaskQueue.take();
+				task = priorityTaskQueue.takeTask();
 				if (task != null) {
 					LOGGER.info("分发task [ " + task.getTaskId() + " ] 中...");
 					schedule(task);

@@ -3,36 +3,19 @@
  */
 package com.YYSchedule.task.consumer;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import javax.jms.JMSException;
-
-import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.core.JmsTemplate;
 
-import com.YYSchedule.common.mybatis.pojo.JobBasic;
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
-import com.YYSchedule.common.mybatis.pojo.TaskFile;
-import com.YYSchedule.common.mybatis.pojo.TaskResult;
-import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
+import com.YYSchedule.common.mybatis.pojo.TaskTemp;
 import com.YYSchedule.common.pojo.Result;
-import com.YYSchedule.common.pojo.ResultStatus;
-import com.YYSchedule.common.rpc.domain.task.TaskStatus;
-import com.YYSchedule.common.utils.Bean2BeanUtils;
-import com.YYSchedule.store.ftp.FtpConnFactory;
-import com.YYSchedule.store.ftp.FtpUtils;
-import com.YYSchedule.store.service.JobBasicService;
+import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.store.service.TaskBasicService;
-import com.YYSchedule.store.service.TaskFileService;
-import com.YYSchedule.store.service.TaskResultService;
-import com.YYSchedule.store.service.TaskTimestampService;
-import com.YYSchedule.store.util.ActiveMQUtils;
-import com.YYSchedule.task.config.Config;
-import com.YYSchedule.task.mapper.ResultStatusMapper;
+import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.task.queue.FailureResultQueue;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 
 /**
  * @author ybt
@@ -44,44 +27,69 @@ public class FailureResultConsumerThread implements Runnable
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FailureResultConsumerThread.class);
 	
-	private JmsTemplate jmsTemplate;
-	
-	private Config config;
-	
 	private TaskBasicService taskBasicService;
 	
-	private TaskResultService taskResultService;
-	
-	private JobBasicService jobBasicService;
-	
-	private TaskTimestampService taskTimestampService;
-	
-	private ResultStatusMapper resultStatusMapper;
+	private TaskTempService taskTempService;
 	
 	private FailureResultQueue failureResultQueue;
+	
+	private PriorityTaskQueue priorityTaskQueue;
 	
 	/**
 	 * @param jmsTemplate
 	 * @param config
 	 */
-	public FailureResultConsumerThread(Config config, JmsTemplate jmsTemplate,TaskBasicService taskBasicService, TaskResultService taskResultService,TaskTimestampService taskTimestampService,JobBasicService jobBasicService,ResultStatusMapper resultStatusMapper,FailureResultQueue failureResultQueue)
+	public FailureResultConsumerThread(TaskBasicService taskBasicService,TaskTempService taskTempService,FailureResultQueue failureResultQueue, PriorityTaskQueue priorityTaskQueue)
 	{
-		this.jmsTemplate = jmsTemplate;
-		this.config = config;
 		this.taskBasicService = taskBasicService;
-		this.taskResultService = taskResultService;
-		this.taskTimestampService = taskTimestampService;
-		this.jobBasicService = jobBasicService;
-		this.resultStatusMapper = resultStatusMapper;
+		this.priorityTaskQueue = priorityTaskQueue;
 		this.failureResultQueue = failureResultQueue;
+		this.taskTempService = taskTempService;
 	}
 	
 	@Override
 	public void run()
 	{
-		//TODO 从failureResultQueue中获取result
-		//TODO 解析，并
+		while (!Thread.currentThread().isInterrupted())
+		{
+			// 从failureResultQueue中获取result
+			Result result = failureResultQueue.takeResult();
+			if (result != null)
+			{
+				// 获取taskBasic,将失败数+1，然后再进行更新
+				int failureCount = saveTaskBasic(result.getTaskId());
+				
+				if (failureCount < 3 && failureCount > 0)
+				{
+					// 根据result将task重新进行封装
+					Task task = getTask(result.getTaskId());
+					if (task != null)
+					{
+						// 把task放到priorityTaskQueue中
+						priorityTaskQueue.addToPriorityTaskQueue(task);
+					}
+				}
+			}
+		}
 	}
 	
-
+	private int saveTaskBasic(long taskId)
+	{
+		TaskBasic taskBasic = taskBasicService.getTaskBasicById(taskId);
+		taskBasic.setFailureCount(taskBasic.getFailureCount() + 1);
+		taskBasicService.updateTaskBasic(taskBasic);
+		
+		return taskBasic.getFailureCount();
+	}
+	
+	private Task getTask(long taskId)
+	{
+		TaskTemp taskTemp = taskTempService.getTaskTempById(taskId);
+		
+		String taskJson = taskTemp.getTask();
+		
+		Task task = JSON.parseObject(taskJson, new TypeReference<Task>(){});
+		
+		return task;
+	}
 }

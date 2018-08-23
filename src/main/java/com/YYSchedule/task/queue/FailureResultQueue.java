@@ -6,8 +6,8 @@ package com.YYSchedule.task.queue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class FailureResultQueue {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FailureResultQueue.class);
 	
-	private BlockingQueue<Result> failureResultQueue = new ArrayBlockingQueue<Result>(MAX_QUEUE_SIZE);
+	private BlockingQueue<Result> failureResultQueue = new LinkedBlockingQueue<Result>();
 	
 	@Value("#{config.max_queue_size}")
 	private static int MAX_QUEUE_SIZE;
@@ -73,4 +73,19 @@ public class FailureResultQueue {
 		return taskIdList;
 	}
 	
+	
+	public synchronized Result takeResult()
+	{
+		Result result = null;
+		
+		try
+		{
+			result = failureResultQueue.take();
+		} catch (InterruptedException e)
+		{
+			LOGGER.error("无法从priorityTaskQueue中取出result" + e.getMessage(), e);
+		}
+		
+		return result;
+	}
 }

@@ -4,18 +4,14 @@
 package com.YYSchedule.task.consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import com.YYSchedule.store.ftp.FtpConnFactory;
-import com.YYSchedule.store.service.JobBasicService;
 import com.YYSchedule.store.service.TaskBasicService;
-import com.YYSchedule.store.service.TaskResultService;
-import com.YYSchedule.store.service.TaskTimestampService;
+import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.task.config.Config;
-import com.YYSchedule.task.mapper.ResultStatusMapper;
 import com.YYSchedule.task.queue.FailureResultQueue;
+import com.YYSchedule.task.queue.PriorityTaskQueue;
 
 /**
  * @author ybt
@@ -30,31 +26,19 @@ public class FailureResultConsumer
 	private Config config;
 	
 	@Autowired
-	private JmsTemplate jmsTemplate;
-	
-	@Autowired
-	private FtpConnFactory ftpConnFactory;
-	
-	@Autowired
 	private TaskBasicService taskBasicService;
 	
 	@Autowired
-	private TaskResultService taskResultService;
-	
-	@Autowired
-	private JobBasicService jobBasicService;
-	
-	@Autowired
-	private TaskTimestampService taskTimestampService;
-	
-	@Autowired
-	private ThreadPoolTaskExecutor threadPoolExecutor;
-	
-	@Autowired
-	private ResultStatusMapper resultStatusMapper;
+	private TaskTempService taskTempService;
 	
 	@Autowired
 	private FailureResultQueue failureResultQueue;
+	
+	@Autowired
+	private PriorityTaskQueue priorityTaskQueue;
+	
+	@Autowired
+	private ThreadPoolTaskExecutor threadPoolExecutor;
 	
 	public void startThreadPool()
 	{
@@ -62,7 +46,7 @@ public class FailureResultConsumer
 		
 		for(int i = 0; i < task_consumer_thread_num; i++)
 		{
-			FailureResultConsumerThread failureResultConsumerThread = new FailureResultConsumerThread(config, jmsTemplate, taskBasicService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
+			FailureResultConsumerThread failureResultConsumerThread = new FailureResultConsumerThread(taskBasicService, taskTempService, failureResultQueue, priorityTaskQueue);
 			threadPoolExecutor.execute(failureResultConsumerThread);
 		}
 	}
