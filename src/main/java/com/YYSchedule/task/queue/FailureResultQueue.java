@@ -26,15 +26,7 @@ public class FailureResultQueue {
 	private BlockingQueue<Result> failureResultQueue = new LinkedBlockingQueue<Result>();
 	
 	@Value("#{config.max_queue_size}")
-	private static int MAX_QUEUE_SIZE;
-	
-	private FailureResultQueue() {
-	}
-	
-	
-	public int getMaxQueueSize() {
-		return MAX_QUEUE_SIZE;
-	}
+	private int MAX_QUEUE_SIZE;
 	
 	public synchronized BlockingQueue<Result> getFailureResultQueue() {
 		return failureResultQueue;
@@ -53,6 +45,11 @@ public class FailureResultQueue {
 	}
 	
 	public synchronized void addToFailureResultQueue(Set<Result> resultSet) {
+		if(resultSet.isEmpty())
+		{
+			return ;
+		}
+		
 		if(failureResultQueue.size() <= MAX_QUEUE_SIZE-resultSet.size()-1){
 			boolean isAdded =  failureResultQueue.addAll(resultSet);
 			if(isAdded)

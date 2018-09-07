@@ -45,7 +45,7 @@ import com.YYSchedule.task.mapper.JobMapper;
 import com.YYSchedule.task.mapper.MissionMapper;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.queue.PriorityTaskQueue;
-import com.YYSchedule.task.utils.JobSplitter;
+import com.YYSchedule.task.splitter.JobSplitter;
 
 /**
  * @author ybt

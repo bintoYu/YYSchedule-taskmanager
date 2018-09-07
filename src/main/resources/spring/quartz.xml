@@ -13,10 +13,11 @@
 
 	<!-- job的定义 -->
 	<bean id="NodeStatusMonitorJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="NodeStatusMonitor" />
+		  <property name="targetObject" ref="NodeStatusMonitor" />
         <property name="targetMethod" value="monitor" />
 	</bean>
-		<bean id="NodeOffLineMonitorJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	
+	<bean id="NodeOffLineMonitorJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="NodeOffLineMonitor" />
         <property name="targetMethod" value="monitor" />
 	</bean>
@@ -24,10 +25,10 @@
 	<!-- Trigger 触发器 -->
     <bean id="NodeStatusMonitorJob_Trigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="NodeStatusMonitorJob" />
-        <!--<property name="cronExpression" value="0/5 * * ? * SAT-SUN" />-->
         <property name="cronExpression" value="0/5 * * * * ?" />
     </bean>
-        <bean id="NodeOffLineMonitorJob_Trigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    
+    <bean id="NodeOffLineMonitorJob_Trigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="NodeOffLineMonitorJob" />
         <property name="cronExpression" value="1/15 * * * * ?" />
     </bean>

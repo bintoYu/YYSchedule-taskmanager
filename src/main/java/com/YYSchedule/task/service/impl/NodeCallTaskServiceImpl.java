@@ -62,7 +62,7 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 		
 		LOGGER.info("成功注册任务节点: " + nodePayload.getNodeId());
 		
-		return 1;
+		return 0;
 	}
 	
 	/*

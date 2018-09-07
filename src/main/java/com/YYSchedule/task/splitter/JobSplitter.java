@@ -1,4 +1,4 @@
-package com.YYSchedule.task.utils;
+package com.YYSchedule.task.splitter;
 
 import java.nio.file.Path;
 import java.text.DecimalFormat;
@@ -27,7 +27,6 @@ public class JobSplitter
 	public static List<Task> split(Job job,List<String> fileList,int userId) {
 		
 		LOGGER.info("开始将job切分成task, jobId: " + job.getJobId());
-		System.out.println("开始将job切分成task, jobId: " + job.getJobId());
 		
 		List<Task> taskList = new ArrayList<Task>();
 		

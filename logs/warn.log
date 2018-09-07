@@ -1947,3 +1947,572 @@ Caused by: java.lang.IllegalArgumentException
 	... 17 more
 1691  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
 1701  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+1952  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+1961  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+3980  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+4010  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+1031038 - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 15,047 milliseconds ago.  The last packet sent successfully to the server was 43 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1137)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3697)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3586)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4131)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2820)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:5359)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:681)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:225)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:439)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:262)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy21.updateTaskResultList(Unknown Source)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:99)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3143)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3597)
+	... 26 more
+1031043 - Error occurred during processing of message.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 15,047 milliseconds ago.  The last packet sent successfully to the server was 43 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:245)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:439)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:262)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy21.updateTaskResultList(Unknown Source)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:99)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 15,047 milliseconds ago.  The last packet sent successfully to the server was 43 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1137)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3697)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3586)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4131)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2820)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:5359)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:681)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:225)
+	... 18 more
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3143)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3597)
+	... 26 more
+1049572 - create connection error
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1137)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:355)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2490)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2527)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2309)
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:834)
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:46)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:419)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:344)
+	at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1375)
+	at com.alibaba.druid.pool.DruidAbstractDataSource.createPhysicalConnection(DruidAbstractDataSource.java:1431)
+	at com.alibaba.druid.pool.DruidDataSource$CreateConnectionThread.run(DruidDataSource.java:1844)
+Caused by: java.net.ConnectException: Connection timed out: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:258)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:305)
+	... 15 more
+1059781 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.net.SocketException: Connection reset, attempting to automatically reconnect
+1743  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+1753  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+1947  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+1957  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+34795 - Error occurred during processing of message.
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLException: Data truncated for column 'task_phase' at row 1
+### The error may involve com.YYSchedule.store.mapper.TaskBasicMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into task_basic      ( task_id,                       task_phase,                       task_status,                       loaded_time )       values ( ?,                       ?,                       ?,                       ? )
+### Cause: java.sql.SQLException: Data truncated for column 'task_phase' at row 1
+; SQL []; Data truncated for column 'task_phase' at row 1; nested exception is java.sql.SQLException: Data truncated for column 'task_phase' at row 1
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:102)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:81)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy11.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy12.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.TaskBasicServiceImpl.insertTaskBasicList(TaskBasicServiceImpl.java:80)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy15.insertTaskBasicList(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:122)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:479)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:1)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.sql.SQLException: Data truncated for column 'task_phase' at row 1
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1094)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy36.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+1737  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+1747  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+3586  - Failed to startup NodeCallTask Server at port : 6010 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$2.startUpNodeCallTaskService(StartUp.java:94)
+	at com.YYSchedule.task.start.StartUp$2.run(StartUp.java:87)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+3596  - Failed to startup UserCallTask Server at port : 6000 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$1.startUpUserCallTaskService(StartUp.java:65)
+	at com.YYSchedule.task.start.StartUp$1.run(StartUp.java:58)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+1873  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+1886  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+1960  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+1970  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+2062  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.FailureResultQueue.MAX_QUEUE_SIZE
+2120  - Autowired annotation is not supported on static fields: private static int com.YYSchedule.task.queue.PriorityTaskQueue.MAX_QUEUE_SIZE
+3777  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'NodeStatusMonitorJob' defined in class path resource [spring/quartz.xml]: Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Either 'targetClass' or 'targetObject' is required
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1566)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:539)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:743)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:93)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:8)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:15)
+	at com.YYSchedule.task.start.StartUp.main(StartUp.java:111)
+Caused by: java.lang.IllegalArgumentException: Either 'targetClass' or 'targetObject' is required
+	at org.springframework.util.MethodInvoker.prepare(MethodInvoker.java:160)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean.afterPropertiesSet(MethodInvokingJobDetailFactoryBean.java:162)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1625)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1562)
+	... 14 more
+15574 - 没有合适的node给task [ 1000043010001 ]  ,taskPhase: CUCKOO
+15574 - 分发task失败！ taskId: [ 1000043010001 ]没有合适的node给task [ 1000043010001 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000043010001 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+15577 - 没有合适的node给task [ 1000043010002 ]  ,taskPhase: CUCKOO
+15577 - 分发task失败！ taskId: [ 1000043010002 ]没有合适的node给task [ 1000043010002 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000043010002 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+8779  - 没有合适的node给task [ 1000049010002 ]  ,taskPhase: CUCKOO
+8779  - 没有合适的node给task [ 1000049010001 ]  ,taskPhase: CUCKOO
+8780  - 分发task失败！ taskId: [ 1000049010001 ]没有合适的node给task [ 1000049010001 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000049010001 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+8780  - 分发task失败！ taskId: [ 1000049010002 ]没有合适的node给task [ 1000049010002 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000049010002 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+6292  - 没有合适的node给task [ 1000059010001 ]  ,taskPhase: CUCKOO
+6293  - 分发task失败！ taskId: [ 1000059010001 ]没有合适的node给task [ 1000059010001 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000059010001 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+6302  - 没有合适的node给task [ 1000059010002 ]  ,taskPhase: CUCKOO
+6303  - 分发task失败！ taskId: [ 1000059010002 ]没有合适的node给task [ 1000059010002 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000059010002 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+1360  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'poolConfig' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Could not resolve placeholder 'redis.maxIdle' in string value "${redis.maxIdle}"; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'redis.maxIdle' in string value "${redis.maxIdle}"
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.processProperties(PropertySourcesPlaceholderConfigurer.java:180)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.postProcessBeanFactory(PropertySourcesPlaceholderConfigurer.java:155)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:265)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:606)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:462)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:83)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:9)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:15)
+	at test.RedisTest.init(RedisTest.java:26)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'redis.maxIdle' in string value "${redis.maxIdle}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:174)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:204)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:178)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer$2.resolveStringValue(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveStringValue(BeanDefinitionVisitor.java:282)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveValue(BeanDefinitionVisitor.java:204)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitPropertyValues(BeanDefinitionVisitor.java:141)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitBeanDefinition(BeanDefinitionVisitor.java:82)
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:208)
+	... 34 more
+3704  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'redisUtils': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: public org.springframework.data.redis.core.RedisTemplate com.YYSchedule.store.util.RedisUtils.redisTemplate; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisTemplate' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisConnectionFactory' while setting bean property 'connectionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisConnectionFactory' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisPoolConfig' while setting bean property 'poolConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jedisPoolConfig' is defined
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:83)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:9)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:15)
+	at test.RedisTest.init(RedisTest.java:26)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: public org.springframework.data.redis.core.RedisTemplate com.YYSchedule.store.util.RedisUtils.redisTemplate; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisTemplate' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisConnectionFactory' while setting bean property 'connectionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisConnectionFactory' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisPoolConfig' while setting bean property 'poolConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jedisPoolConfig' is defined
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 38 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisTemplate' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisConnectionFactory' while setting bean property 'connectionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisConnectionFactory' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisPoolConfig' while setting bean property 'poolConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jedisPoolConfig' is defined
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1469)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1214)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1127)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 40 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisConnectionFactory' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Cannot resolve reference to bean 'jedisPoolConfig' while setting bean property 'poolConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jedisPoolConfig' is defined
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:359)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:108)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1469)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1214)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351)
+	... 53 more
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jedisPoolConfig' is defined
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanDefinition(DefaultListableBeanFactory.java:694)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getMergedLocalBeanDefinition(AbstractBeanFactory.java:1157)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:280)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:351)
+	... 63 more
+3717  - Exception encountered during context initialization - cancelling refresh attempt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'redisUtils': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: public org.springframework.data.redis.core.RedisTemplate com.YYSchedule.store.util.RedisUtils.redisTemplate; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisTemplate' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Invocation of init method failed; nested exception is java.lang.NoSuchMethodError: org.springframework.core.serializer.support.DeserializingConverter.<init>(Ljava/lang/ClassLoader;)V
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:757)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:139)
+	at org.springframework.context.support.ClassPathXmlApplicationContext.<init>(ClassPathXmlApplicationContext.java:83)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<init>(ApplicationContextHandler.java:9)
+	at com.YYSchedule.task.applicationContext.ApplicationContextHandler.<clinit>(ApplicationContextHandler.java:15)
+	at test.RedisTest.init(RedisTest.java:24)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: public org.springframework.data.redis.core.RedisTemplate com.YYSchedule.store.util.RedisUtils.redisTemplate; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisTemplate' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Invocation of init method failed; nested exception is java.lang.NoSuchMethodError: org.springframework.core.serializer.support.DeserializingConverter.<init>(Ljava/lang/ClassLoader;)V
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:558)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:87)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 38 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jedisTemplate' defined in file [D:\ybt\workspace-pc\YYSchedule-taskmanager\target\classes\spring\applicationContext-redis.xml]: Invocation of init method failed; nested exception is java.lang.NoSuchMethodError: org.springframework.core.serializer.support.DeserializingConverter.<init>(Ljava/lang/ClassLoader;)V
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1566)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:539)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:298)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:193)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1127)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1051)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:949)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:530)
+	... 40 more
+Caused by: java.lang.NoSuchMethodError: org.springframework.core.serializer.support.DeserializingConverter.<init>(Ljava/lang/ClassLoader;)V
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.<init>(JdkSerializationRedisSerializer.java:54)
+	at org.springframework.data.redis.core.RedisTemplate.afterPropertiesSet(RedisTemplate.java:122)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1625)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1562)
+	... 50 more
+4306  - Failed to startup UserCallTask Server at port : 6000 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6000.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$1.startUpUserCallTaskService(StartUp.java:65)
+	at com.YYSchedule.task.start.StartUp$1.run(StartUp.java:58)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(DualStackPlainSocketImpl.java:106)
+	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:376)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:190)
+	at java.net.ServerSocket.bind(ServerSocket.java:376)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+4333  - Failed to startup NodeCallTask Server at port : 6010 : Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+org.apache.thrift.transport.TTransportException: Could not create ServerSocket on address 0.0.0.0/0.0.0.0:6010.
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:109)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:91)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:83)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:76)
+	at com.YYSchedule.task.start.StartUp$2.startUpNodeCallTaskService(StartUp.java:94)
+	at com.YYSchedule.task.start.StartUp$2.run(StartUp.java:87)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(DualStackPlainSocketImpl.java:106)
+	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:376)
+	at java.net.PlainSocketImpl.bind(PlainSocketImpl.java:190)
+	at java.net.ServerSocket.bind(ServerSocket.java:376)
+	at org.apache.thrift.transport.TServerSocket.<init>(TServerSocket.java:106)
+	... 6 more
+14663 - 没有合适的node给task [ 1000069010001 ]  ,taskPhase: CUCKOO
+14664 - 分发task失败！ taskId: [ 1000069010001 ]没有合适的node给task [ 1000069010001 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000069010001 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+5264975 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.net.SocketException: Connection reset, attempting to automatically reconnect

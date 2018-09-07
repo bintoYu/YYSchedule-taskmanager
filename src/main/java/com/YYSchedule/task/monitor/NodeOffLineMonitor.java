@@ -88,6 +88,7 @@ public class NodeOffLineMonitor
 			}
 			
 			priorityTaskQueue.addToPriorityTaskQueue(taskSet);
+			
 			isCleared = true;
 		}
 		

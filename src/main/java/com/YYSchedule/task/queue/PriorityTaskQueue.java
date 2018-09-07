@@ -21,22 +21,13 @@ import com.YYSchedule.common.pojo.Task;
 @Scope("singleton")
 public class PriorityTaskQueue
 {
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(PriorityTaskQueue.class);
 	
 	@Value("#{config.max_queue_size}")
-	private static int MAX_QUEUE_SIZE;
+	private int MAX_QUEUE_SIZE;
 	
 	private PriorityBlockingQueue<Task> priorityTaskQueue = new PriorityBlockingQueue<Task>();
 	
-	private PriorityTaskQueue()
-	{
-	}
-	
-	public int getMaxQueueSize()
-	{
-		return MAX_QUEUE_SIZE;
-	}
 	
 	public synchronized PriorityBlockingQueue<Task> getPriorityTaskQueue()
 	{
@@ -45,6 +36,11 @@ public class PriorityTaskQueue
 	
 	public synchronized void addToPriorityTaskQueue(Task task)
 	{
+		if(task == null)
+		{
+			return ;
+		}
+		
 		if (priorityTaskQueue.size() <= MAX_QUEUE_SIZE - 2)
 		{
 			boolean isAdded = priorityTaskQueue.add(task);
@@ -61,6 +57,11 @@ public class PriorityTaskQueue
 	
 	public synchronized void addToPriorityTaskQueue(Set<Task> taskSet)
 	{
+		if(taskSet.isEmpty())
+		{
+			return ;
+		}
+		
 		if (priorityTaskQueue.size() <= MAX_QUEUE_SIZE - taskSet.size() - 1)
 		{
 			boolean isAdded = priorityTaskQueue.addAll(taskSet);
@@ -78,14 +79,14 @@ public class PriorityTaskQueue
 	public synchronized List<Long> getTaskIdList()
 	{
 		List<Long> taskIdList = new ArrayList<Long>();
-		for (Task task : getPriorityTaskQueue())
+		for (Task task : priorityTaskQueue)
 		{
 			taskIdList.add(task.getTaskId());
 		}
 		return taskIdList;
 	}
 	
-	public synchronized Task takeTask()
+	public Task takeTask()
 	{
 		Task task = null;
 		try

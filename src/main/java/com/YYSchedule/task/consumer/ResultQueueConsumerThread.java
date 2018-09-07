@@ -11,6 +11,7 @@ import javax.jms.JMSException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 
 import com.YYSchedule.common.mybatis.pojo.JobBasic;
@@ -30,6 +31,7 @@ import com.YYSchedule.store.service.TaskFileService;
 import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.store.util.ActiveMQUtils;
+import com.YYSchedule.store.util.RedisUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.ResultStatusMapper;
 import com.YYSchedule.task.queue.FailureResultQueue;
@@ -46,7 +48,7 @@ public class ResultQueueConsumerThread implements Runnable
 	
 	private JmsTemplate jmsTemplate;
 	
-	private Config config;
+	private RedisTemplate redisTemplate;
 	
 	private FtpConnFactory ftpConnFactory;
 	
@@ -68,11 +70,13 @@ public class ResultQueueConsumerThread implements Runnable
 	 * @param jmsTemplate
 	 * @param config
 	 */
-	public ResultQueueConsumerThread(Config config, FtpConnFactory ftpConnFactory, JmsTemplate jmsTemplate,TaskBasicService taskBasicService, TaskFileService taskFileService, TaskResultService taskResultService,TaskTimestampService taskTimestampService,JobBasicService jobBasicService,ResultStatusMapper resultStatusMapper,FailureResultQueue failureResultQueue)
+	public ResultQueueConsumerThread(FtpConnFactory ftpConnFactory, JmsTemplate jmsTemplate, RedisTemplate redisTemplate,TaskBasicService taskBasicService, TaskFileService taskFileService,
+			TaskResultService taskResultService, TaskTimestampService taskTimestampService, JobBasicService jobBasicService, ResultStatusMapper resultStatusMapper,
+			FailureResultQueue failureResultQueue)
 	{
-		this.jmsTemplate = jmsTemplate;
 		this.ftpConnFactory = ftpConnFactory;
-		this.config = config;
+		this.jmsTemplate = jmsTemplate;
+		this.redisTemplate = redisTemplate;
 		this.taskBasicService = taskBasicService;
 		this.taskFileService = taskFileService;
 		this.taskResultService = taskResultService;
@@ -86,40 +90,49 @@ public class ResultQueueConsumerThread implements Runnable
 	public void run()
 	{
 		InetAddress address = null;
-		try {
+		try
+		{
 			address = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
+		} catch (UnknownHostException e)
+		{
 			e.printStackTrace();
 		}
-		String resultQueue = address.getHostAddress() + ":"  + "resultQueue";
 		
-		while (!Thread.currentThread().isInterrupted()) {
+		while (!Thread.currentThread().isInterrupted())
+		{
+			String resultQueue = address.getHostAddress() + ":" + "resultQueue";
+			
 			Result result = null;
-			try {
+			try
+			{
 				// 从队列distributeTaskQueue取出task
 				result = ActiveMQUtils.receiveResult(jmsTemplate, resultQueue);
-			} catch (JMSException e) {
+			} catch (JMSException e)
+			{
 				LOGGER.error("从队列" + resultQueue + "取result失败！" + e.getMessage());
 			}
 			
-			if (result != null) {
+			if (result != null)
+			{
 				LOGGER.info("已从队列" + resultQueue + "中取出result [ " + result.getTaskId() + " ] ");
 				
-				//更新数据库
+				// 更新数据库
 				updateDatabase(result);
 				
-				//将成功或失败结果放入结果状态统计模块中
+				// 将成功或失败结果放入结果状态统计模块中
 				ResultStatus resultStatus = new ResultStatus(result);
 				resultStatusMapper.updateResultStatus(resultStatus);
 				
-				//TODO 成功：将result发送到redis中,并且将ftp上的文件删除
-				if(result.getTaskStatus() == TaskStatus.FINISHED)
+				// TODO 成功：将result发送到redis中,并且将ftp上的文件删除
+				if (result.getTaskStatus() == TaskStatus.FINISHED)
 				{
 					deleteFromftp(result);
+					
+					RedisUtils.set(redisTemplate,result.getTaskPhase().toString(), result.getResult());
 				}
 				else
 				{
-					//失败，将result存到FailureResultQueue中
+					// 失败，将result存到FailureResultQueue中
 					failureResultQueue.addToFailureResultQueue(result);
 				}
 				
@@ -129,23 +142,26 @@ public class ResultQueueConsumerThread implements Runnable
 	
 	private void updateDatabase(Result result)
 	{
-		//修改job的状态信息
+		// 修改job的状态信息
 		long jobId = result.getTaskId() / 10000;
 		JobBasic jobBasic = jobBasicService.getJobBasicById(jobId);
 		jobBasic.setFinishNum(jobBasic.getFinishNum() + 1);
 		jobBasicService.updateJobBasic(jobBasic);
 		
-		//更新task的状态信息
+		// 更新task的状态信息
 		TaskBasic taskBasic = new TaskBasic();
 		taskBasic.setTaskId(result.getTaskId());
 		taskBasic.setTaskStatus(result.getTaskStatus().toString());
 		taskBasicService.updateTaskBasic(taskBasic);
 		
-		// result转化成taskResult，并存入数据库中
-		TaskResult taskResult = Bean2BeanUtils.result2TaskResult(result);
-		taskResultService.updateTaskResult(taskResult);
+		if (result.getTaskStatus() == TaskStatus.FINISHED || result.getTaskStatus() == TaskStatus.FAILURE)
+		{
+			// result转化成taskResult，并存入数据库中
+			TaskResult taskResult = Bean2BeanUtils.result2TaskResult(result);
+			taskResultService.updateTaskResult(taskResult);
+		}
 		
-		//更新task的结束时间
+		// 更新task的结束时间
 		TaskTimestamp taskTimestamp = new TaskTimestamp();
 		taskTimestamp.setTaskId(result.getTaskId());
 		taskTimestamp.setFinishedTime(result.getFinishedTime());

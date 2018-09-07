@@ -4,6 +4,8 @@
 package com.YYSchedule.task.consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,10 @@ public class ResultQueueConsumer
 	
 	@Autowired
 	private JmsTemplate jmsTemplate;
+	
+	@Autowired
+	@Qualifier("jedisTemplate")
+	public RedisTemplate redisTemplate;
 	
 	@Autowired
 	private FtpConnFactory ftpConnFactory;
@@ -66,7 +72,7 @@ public class ResultQueueConsumer
 		
 		for(int i = 0; i < task_consumer_thread_num; i++)
 		{
-			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(config,ftpConnFactory, jmsTemplate, taskBasicService, taskFileService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
+			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(ftpConnFactory, jmsTemplate, redisTemplate, taskBasicService, taskFileService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
 			threadPoolExecutor.execute(resultQueueConsumerThread);
 		}
 	}

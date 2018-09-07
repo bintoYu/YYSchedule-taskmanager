@@ -10,7 +10,7 @@
   <dependencies>
 		<dependency>
 		    <groupId>com.binto</groupId>
-			<artifactId>YYSchedule-storemanager</artifactId>
+			<artifactId>YYSchedule-store</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
