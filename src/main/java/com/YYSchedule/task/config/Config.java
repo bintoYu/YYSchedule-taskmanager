@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 @Component("Config")
 public class Config
 {
+	@Value("#{config.taskmanager_ip}")
+	private String taskmanager_ip;
+	
 	@Value("#{config.ftp_server_urls}")
 	private String ftp_server_urls;
 	
@@ -33,6 +36,11 @@ public class Config
 	@Value("#{config.node_success_rate}")
 	private double node_success_rate;
 	
+	public String getTaskmanager_ip()
+	{
+		return taskmanager_ip;
+	}
+
 	public String getFtp_server_urls()
 	{
 		return ftp_server_urls;

@@ -3,8 +3,10 @@
  */
 package com.YYSchedule.task.consumer;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 import javax.jms.JMSException;
 
@@ -46,6 +48,8 @@ public class ResultQueueConsumerThread implements Runnable
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ResultQueueConsumerThread.class);
 	
+	private Config config;
+	
 	private JmsTemplate jmsTemplate;
 	
 	private RedisTemplate redisTemplate;
@@ -70,10 +74,11 @@ public class ResultQueueConsumerThread implements Runnable
 	 * @param jmsTemplate
 	 * @param config
 	 */
-	public ResultQueueConsumerThread(FtpConnFactory ftpConnFactory, JmsTemplate jmsTemplate, RedisTemplate redisTemplate,TaskBasicService taskBasicService, TaskFileService taskFileService,
+	public ResultQueueConsumerThread(Config config, FtpConnFactory ftpConnFactory, JmsTemplate jmsTemplate, RedisTemplate redisTemplate,TaskBasicService taskBasicService, TaskFileService taskFileService,
 			TaskResultService taskResultService, TaskTimestampService taskTimestampService, JobBasicService jobBasicService, ResultStatusMapper resultStatusMapper,
 			FailureResultQueue failureResultQueue)
 	{
+		this.config = config;
 		this.ftpConnFactory = ftpConnFactory;
 		this.jmsTemplate = jmsTemplate;
 		this.redisTemplate = redisTemplate;
@@ -88,54 +93,43 @@ public class ResultQueueConsumerThread implements Runnable
 	
 	@Override
 	public void run()
-	{
-		InetAddress address = null;
-		try
-		{
-			address = InetAddress.getLocalHost();
-		} catch (UnknownHostException e)
-		{
-			e.printStackTrace();
-		}
+	{	
+		String resultQueue = config.getTaskmanager_ip() + ":" + "resultQueue";
+		LOGGER.info("开启队列:" + resultQueue);
 		
 		while (!Thread.currentThread().isInterrupted())
 		{
-			String resultQueue = address.getHostAddress() + ":" + "resultQueue";
-			
 			Result result = null;
 			try
 			{
+				LOGGER.info(new Date().toString() + "\t" + resultQueue);
 				// 从队列distributeTaskQueue取出task
 				result = ActiveMQUtils.receiveResult(jmsTemplate, resultQueue);
 			} catch (JMSException e)
 			{
 				LOGGER.error("从队列" + resultQueue + "取result失败！" + e.getMessage());
 			}
-			
 			if (result != null)
 			{
 				LOGGER.info("已从队列" + resultQueue + "中取出result [ " + result.getTaskId() + " ] ");
 				
 				// 更新数据库
 				updateDatabase(result);
-				
 				// 将成功或失败结果放入结果状态统计模块中
 				ResultStatus resultStatus = new ResultStatus(result);
 				resultStatusMapper.updateResultStatus(resultStatus);
 				
-				// TODO 成功：将result发送到redis中,并且将ftp上的文件删除
+				// 成功：将result发送到redis中,并且将ftp上的文件删除
 				if (result.getTaskStatus() == TaskStatus.FINISHED)
 				{
 					deleteFromftp(result);
-					
 					RedisUtils.set(redisTemplate,result.getTaskPhase().toString(), result.getResult());
 				}
 				else
 				{
 					// 失败，将result存到FailureResultQueue中
-					failureResultQueue.addToFailureResultQueue(result);
+//					failureResultQueue.addToFailureResultQueue(result);
 				}
-				
 			}
 		}
 	}
@@ -172,6 +166,15 @@ public class ResultQueueConsumerThread implements Runnable
 	{
 		TaskFile taskFile = taskFileService.getTaskFileById(result.getTaskId());
 		FTPClient client = ftpConnFactory.connect();
-		FtpUtils.deleteFtpFile(client, taskFile.getFilePath());
+		if(FtpUtils.isFileExist(client, taskFile.getFilePath()))
+			FtpUtils.deleteFtpFile(client, taskFile.getFilePath());
+		
+		try
+		{
+			client.disconnect();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

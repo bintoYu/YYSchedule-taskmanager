@@ -68,11 +68,11 @@ public class ResultQueueConsumer
 	
 	public void startThreadPool()
 	{
-		int task_consumer_thread_num = config.getResult_consumer_thread_num();
+		int result_consumer_thread_num = config.getResult_consumer_thread_num();
 		
-		for(int i = 0; i < task_consumer_thread_num; i++)
+		for(int i = 0; i < result_consumer_thread_num; i++)
 		{
-			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(ftpConnFactory, jmsTemplate, redisTemplate, taskBasicService, taskFileService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
+			ResultQueueConsumerThread resultQueueConsumerThread = new ResultQueueConsumerThread(config, ftpConnFactory, jmsTemplate, redisTemplate, taskBasicService, taskFileService, taskResultService, taskTimestampService, jobBasicService, resultStatusMapper,failureResultQueue);
 			threadPoolExecutor.execute(resultQueueConsumerThread);
 		}
 	}

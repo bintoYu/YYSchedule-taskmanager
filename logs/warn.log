@@ -2516,3 +2516,528 @@ java.lang.Exception: 没有合适的node给task [ 1000069010001 ]  ,taskPhase: C
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
 	at java.lang.Thread.run(Thread.java:744)
 5264975 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.net.SocketException: Connection reset, attempting to automatically reconnect
+678673725 - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 15,084 milliseconds ago.  The last packet sent successfully to the server was 88 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1137)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3697)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3586)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4131)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2820)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:5359)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:681)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:225)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:463)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:276)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy23.updateTaskResultList(Unknown Source)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:99)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:352)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3143)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3597)
+	... 26 more
+678674055 - Error occurred during processing of message.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 15,084 milliseconds ago.  The last packet sent successfully to the server was 88 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:245)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:463)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:276)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy23.updateTaskResultList(Unknown Source)
+	at com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl.reportHeartbeat(NodeCallTaskServiceImpl.java:99)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:368)
+	at com.YYSchedule.common.rpc.service.task.NodeCallTaskService$Processor$reportHeartbeat.getResult(NodeCallTaskService.java:352)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 15,084 milliseconds ago.  The last packet sent successfully to the server was 88 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1137)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3697)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3586)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4131)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2820)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:5359)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:681)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:225)
+	... 18 more
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3143)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3597)
+	... 26 more
+678684573 - Transport (tcp://192.168.1.184:61616) failed, reason:  java.io.EOFException, attempting to automatically reconnect
+178389 - Error occurred during processing of message.
+org.springframework.dao.DuplicateKeyException: 
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '1000053' for key 'PRIMARY'
+### The error may involve com.YYSchedule.store.mapper.MissionBasicMapper.insertSelective-Inline
+### The error occurred while setting parameters
+### SQL: insert into mission_basic      ( mission_id,                       mission_name,                       mission_start_time,                              user_id )       values ( ?,                       ?,                       ?,                              ? )
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '1000053' for key 'PRIMARY'
+; SQL []; Duplicate entry '1000053' for key 'PRIMARY'; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '1000053' for key 'PRIMARY'
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:239)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy11.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:240)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:51)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:52)
+	at com.sun.proxy.$Proxy28.insertSelective(Unknown Source)
+	at com.YYSchedule.store.service.impl.MissionBasicServiceImpl.insertMissionBasic(MissionBasicServiceImpl.java:54)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:267)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	at com.sun.proxy.$Proxy29.insertMissionBasic(Unknown Source)
+	at com.YYSchedule.task.service.impl.UserCallTaskServiceImpl.submitMission(UserCallTaskServiceImpl.java:98)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:479)
+	at com.YYSchedule.common.rpc.service.task.UserCallTaskService$Processor$submitMission.getResult(UserCallTaskService.java:463)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.TThreadPoolServer$WorkerProcess.run(TThreadPoolServer.java:286)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '1000053' for key 'PRIMARY'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:408)
+	at com.mysql.jdbc.Util.getInstance(Util.java:383)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1049)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4208)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4140)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2597)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2758)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2826)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2082)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1302)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:44)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:69)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:48)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:105)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
+	at com.sun.proxy.$Proxy38.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:152)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358)
+	... 30 more
+56622 - 没有合适的node给task [ 1000057010017 ]  ,taskPhase: CUCKOO
+56623 - 分发task失败！ taskId: [ 1000057010017 ]没有合适的node给task [ 1000057010017 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010017 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56629 - 没有合适的node给task [ 1000057010010 ]  ,taskPhase: CUCKOO
+56629 - 分发task失败！ taskId: [ 1000057010010 ]没有合适的node给task [ 1000057010010 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010010 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56625 - 没有合适的node给task [ 1000057010019 ]  ,taskPhase: CUCKOO
+56630 - 分发task失败！ taskId: [ 1000057010019 ]没有合适的node给task [ 1000057010019 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010019 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56727 - 没有合适的node给task [ 1000057010008 ]  ,taskPhase: CUCKOO
+56727 - 分发task失败！ taskId: [ 1000057010008 ]没有合适的node给task [ 1000057010008 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010008 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56764 - 没有合适的node给task [ 1000057010013 ]  ,taskPhase: CUCKOO
+56765 - 分发task失败！ taskId: [ 1000057010013 ]没有合适的node给task [ 1000057010013 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010013 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56765 - 没有合适的node给task [ 1000057010007 ]  ,taskPhase: CUCKOO
+56765 - 分发task失败！ taskId: [ 1000057010007 ]没有合适的node给task [ 1000057010007 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010007 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56802 - 没有合适的node给task [ 1000057010006 ]  ,taskPhase: CUCKOO
+56803 - 分发task失败！ taskId: [ 1000057010006 ]没有合适的node给task [ 1000057010006 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010006 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56804 - 没有合适的node给task [ 1000057010014 ]  ,taskPhase: CUCKOO
+56804 - 分发task失败！ taskId: [ 1000057010014 ]没有合适的node给task [ 1000057010014 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010014 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56808 - 没有合适的node给task [ 1000057010016 ]  ,taskPhase: CUCKOO
+56808 - 分发task失败！ taskId: [ 1000057010016 ]没有合适的node给task [ 1000057010016 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010016 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56809 - 没有合适的node给task [ 1000057010009 ]  ,taskPhase: CUCKOO
+56809 - 分发task失败！ taskId: [ 1000057010009 ]没有合适的node给task [ 1000057010009 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010009 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56816 - 没有合适的node给task [ 1000057010020 ]  ,taskPhase: CUCKOO
+56817 - 分发task失败！ taskId: [ 1000057010020 ]没有合适的node给task [ 1000057010020 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010020 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56824 - 没有合适的node给task [ 1000057010011 ]  ,taskPhase: CUCKOO
+56824 - 分发task失败！ taskId: [ 1000057010011 ]没有合适的node给task [ 1000057010011 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010011 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56842 - 没有合适的node给task [ 1000057010012 ]  ,taskPhase: CUCKOO
+56842 - 分发task失败！ taskId: [ 1000057010012 ]没有合适的node给task [ 1000057010012 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010012 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56864 - 没有合适的node给task [ 1000057010015 ]  ,taskPhase: CUCKOO
+56864 - 没有合适的node给task [ 1000057010005 ]  ,taskPhase: CUCKOO
+56864 - 分发task失败！ taskId: [ 1000057010015 ]没有合适的node给task [ 1000057010015 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010015 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56864 - 分发task失败！ taskId: [ 1000057010005 ]没有合适的node给task [ 1000057010005 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010005 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56865 - 没有合适的node给task [ 1000057010018 ]  ,taskPhase: CUCKOO
+56866 - 分发task失败！ taskId: [ 1000057010018 ]没有合适的node给task [ 1000057010018 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010018 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56895 - 没有合适的node给task [ 1000057010003 ]  ,taskPhase: CUCKOO
+56895 - 没有合适的node给task [ 1000057010002 ]  ,taskPhase: CUCKOO
+56896 - 分发task失败！ taskId: [ 1000057010003 ]没有合适的node给task [ 1000057010003 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010003 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56896 - 分发task失败！ taskId: [ 1000057010002 ]没有合适的node给task [ 1000057010002 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010002 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56897 - 没有合适的node给task [ 1000057010001 ]  ,taskPhase: CUCKOO
+56897 - 分发task失败！ taskId: [ 1000057010001 ]没有合适的node给task [ 1000057010001 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010001 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56901 - 没有合适的node给task [ 1000057010004 ]  ,taskPhase: CUCKOO
+56901 - 分发task失败！ taskId: [ 1000057010004 ]没有合适的node给task [ 1000057010004 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000057010004 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56971 - 没有合适的node给task [ 1000057020012 ]  ,taskPhase: VIRUSTOTAL
+56972 - 没有合适的node给task [ 1000057020010 ]  ,taskPhase: VIRUSTOTAL
+56972 - 分发task失败！ taskId: [ 1000057020010 ]没有合适的node给task [ 1000057020010 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020010 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56970 - 没有合适的node给task [ 1000057020019 ]  ,taskPhase: VIRUSTOTAL
+56972 - 分发task失败！ taskId: [ 1000057020012 ]没有合适的node给task [ 1000057020012 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020012 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+56974 - 分发task失败！ taskId: [ 1000057020019 ]没有合适的node给task [ 1000057020019 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020019 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57012 - 没有合适的node给task [ 1000057020008 ]  ,taskPhase: VIRUSTOTAL
+57012 - 分发task失败！ taskId: [ 1000057020008 ]没有合适的node给task [ 1000057020008 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020008 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57013 - 没有合适的node给task [ 1000057020006 ]  ,taskPhase: VIRUSTOTAL
+57013 - 分发task失败！ taskId: [ 1000057020006 ]没有合适的node给task [ 1000057020006 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020006 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57013 - 没有合适的node给task [ 1000057020004 ]  ,taskPhase: VIRUSTOTAL
+57014 - 分发task失败！ taskId: [ 1000057020004 ]没有合适的node给task [ 1000057020004 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020004 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57020 - 没有合适的node给task [ 1000057020002 ]  ,taskPhase: VIRUSTOTAL
+57020 - 没有合适的node给task [ 1000057020014 ]  ,taskPhase: VIRUSTOTAL
+57020 - 分发task失败！ taskId: [ 1000057020002 ]没有合适的node给task [ 1000057020002 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020002 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57020 - 分发task失败！ taskId: [ 1000057020014 ]没有合适的node给task [ 1000057020014 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020014 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57022 - 没有合适的node给task [ 1000057020016 ]  ,taskPhase: VIRUSTOTAL
+57022 - 分发task失败！ taskId: [ 1000057020016 ]没有合适的node给task [ 1000057020016 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020016 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57027 - 没有合适的node给task [ 1000057020018 ]  ,taskPhase: VIRUSTOTAL
+57027 - 分发task失败！ taskId: [ 1000057020018 ]没有合适的node给task [ 1000057020018 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020018 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57027 - 没有合适的node给task [ 1000057020020 ]  ,taskPhase: VIRUSTOTAL
+57027 - 分发task失败！ taskId: [ 1000057020020 ]没有合适的node给task [ 1000057020020 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020020 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57031 - 没有合适的node给task [ 1000057020011 ]  ,taskPhase: VIRUSTOTAL
+57032 - 分发task失败！ taskId: [ 1000057020011 ]没有合适的node给task [ 1000057020011 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020011 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57038 - 没有合适的node给task [ 1000057020009 ]  ,taskPhase: VIRUSTOTAL
+57038 - 没有合适的node给task [ 1000057020007 ]  ,taskPhase: VIRUSTOTAL
+57039 - 分发task失败！ taskId: [ 1000057020007 ]没有合适的node给task [ 1000057020007 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020007 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57039 - 分发task失败！ taskId: [ 1000057020009 ]没有合适的node给task [ 1000057020009 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020009 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57039 - 没有合适的node给task [ 1000057020005 ]  ,taskPhase: VIRUSTOTAL
+57040 - 分发task失败！ taskId: [ 1000057020005 ]没有合适的node给task [ 1000057020005 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020005 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57045 - 没有合适的node给task [ 1000057020003 ]  ,taskPhase: VIRUSTOTAL
+57046 - 分发task失败！ taskId: [ 1000057020003 ]没有合适的node给task [ 1000057020003 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020003 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57046 - 没有合适的node给task [ 1000057020001 ]  ,taskPhase: VIRUSTOTAL
+57046 - 分发task失败！ taskId: [ 1000057020001 ]没有合适的node给task [ 1000057020001 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020001 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57047 - 没有合适的node给task [ 1000057020013 ]  ,taskPhase: VIRUSTOTAL
+57047 - 分发task失败！ taskId: [ 1000057020013 ]没有合适的node给task [ 1000057020013 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020013 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57052 - 没有合适的node给task [ 1000057020015 ]  ,taskPhase: VIRUSTOTAL
+57052 - 分发task失败！ taskId: [ 1000057020015 ]没有合适的node给task [ 1000057020015 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020015 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+57053 - 没有合适的node给task [ 1000057020017 ]  ,taskPhase: VIRUSTOTAL
+57053 - 分发task失败！ taskId: [ 1000057020017 ]没有合适的node给task [ 1000057020017 ]  ,taskPhase: VIRUSTOTAL
+java.lang.Exception: 没有合适的node给task [ 1000057020017 ]  ,taskPhase: VIRUSTOTAL
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)

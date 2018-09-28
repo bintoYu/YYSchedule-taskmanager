@@ -1,11 +1,11 @@
 #!/bin/sh
 #Author: yanwei
 
-JAVA_HOME="/home/softsec/jdk1.8.0_121"
+JAVA_HOME="/usr/java/jdk1.7.0_55"
 RUNNING_USER=root
 CURRENT_DIR=`pwd`
 APP_HOME=`dirname $CURRENT_DIR`
-APP_NAME=tase-taskmanager-pc-2.0-SNAPSHOT.jar
+APP_NAME=YYSchedule-taskmanager.jar
 LOG_NAME=taskmanager.log
  
 CLASSPATH=$APP_HOME
