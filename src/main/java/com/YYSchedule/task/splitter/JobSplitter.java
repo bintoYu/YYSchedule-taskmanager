@@ -24,7 +24,7 @@ public class JobSplitter
 	 * @param job
 	 * @return
 	 */
-	public static List<Task> split(Job job,List<String> fileList,int userId) {
+	public static List<Task> split(Job job,int userId) {
 		
 		LOGGER.info("开始将job切分成task, jobId: " + job.getJobId());
 		
@@ -32,7 +32,7 @@ public class JobSplitter
 		
 		AtomicInteger taskCount = new AtomicInteger(0);
 		
-		for(String file : fileList)
+		for(String file : job.getFileList())
 		{
 			Task task = new Task();
 			// FIXME if parameter size multiple phase size is larger than 9999, then failed

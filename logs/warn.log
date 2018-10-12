@@ -3041,3 +3041,21 @@ java.lang.Exception: 没有合适的node给task [ 1000057020017 ]  ,taskPhase: V
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
 	at java.lang.Thread.run(Thread.java:744)
+51702 - 没有合适的node给task [ 1000099010001 ]  ,taskPhase: CUCKOO
+51703 - 没有合适的node给task [ 1000099010002 ]  ,taskPhase: CUCKOO
+51723 - 分发task失败！ taskId: [ 1000099010001 ]没有合适的node给task [ 1000099010001 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000099010001 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+51723 - 分发task失败！ taskId: [ 1000099010002 ]没有合适的node给task [ 1000099010002 ]  ,taskPhase: CUCKOO
+java.lang.Exception: 没有合适的node给task [ 1000099010002 ]  ,taskPhase: CUCKOO
+	at com.YYSchedule.task.matcher.LoadBalancingMatcher.getMatchedNode(LoadBalancingMatcher.java:68)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.schedule(TaskDistributorThread.java:106)
+	at com.YYSchedule.task.distributor.TaskDistributorThread.run(TaskDistributorThread.java:67)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)

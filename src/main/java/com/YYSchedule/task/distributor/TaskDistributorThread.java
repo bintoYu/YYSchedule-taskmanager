@@ -124,7 +124,7 @@ public class TaskDistributorThread implements Runnable {
 		try
 		{
 			//将task发送到distributeTaskQueue中
-			ActiveMQUtils.sendTask(jmsTemplate, distributeTaskQueue, task);
+			ActiveMQUtils.sendTask(jmsTemplate, distributeTaskQueue, task, task.getTaskPriority().getValue());
 		}
 		catch(JmsException jmsException)
 		{

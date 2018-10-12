@@ -70,7 +70,6 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 			UnavailableException, TimeoutException, TException
 	{	
 		//获取用户上传的mission的公用属性
-		List<String> fileList = mission.getFileList();
 		List<Job> jobList = mission.getJobList();
 		//long impatienceTime = mission.getImpatienceTime();
 		
@@ -113,7 +112,7 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 			List<TaskFile> taskFileList;
 			List<TaskTimestamp> taskTimestampList;
 			List<TaskTemp> taskTempList; 
-			taskList = JobSplitter.split(job, fileList, mission.getUserId());
+			taskList = JobSplitter.split(job,  mission.getUserId());
 			taskBasicList = Bean2BeanUtils.taskList2TaskBasicList(taskList);
 			taskFileList = Bean2BeanUtils.taskList2TaskFileList(taskList);
 			taskTimestampList = Bean2BeanUtils.taskList2TaskTimestampList(taskList);
