@@ -1,11 +1,12 @@
 package com.YYSchedule.task.distributor;
 
-import java.util.concurrent.BlockingQueue;
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
 
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
@@ -15,8 +16,8 @@ import com.YYSchedule.common.rpc.domain.task.TaskStatus;
 import com.YYSchedule.common.utils.StringUtils;
 import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskTimestampService;
-import com.YYSchedule.store.util.ActiveMQUtils;
-import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
+import com.YYSchedule.store.util.ActiveMQUtils_nospring;
+import com.YYSchedule.store.util.QueueConnectionFactory;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.matcher.LoadBalancingMatcher;
 import com.YYSchedule.task.queue.PriorityTaskQueue;
@@ -32,9 +33,9 @@ public class TaskDistributorThread implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaskDistributorThread.class);
 	
-	private PriorityTaskQueue priorityTaskQueue;
+	private Config config;
 	
-	private String distributeTaskQueue;
+	private PriorityTaskQueue priorityTaskQueue;
 	
 	private TaskBasicService taskBasicService;
 	
@@ -43,15 +44,23 @@ public class TaskDistributorThread implements Runnable {
 	private JmsTemplate jmsTemplate;
 	
 	private volatile boolean stop = false;
+	
+	//activemq
+	private Connection activemqConnection;
+	private Session activemqSession;
+	private MessageProducer taskProducer;
 
 	/**
 	 * 
 	 */
-	public TaskDistributorThread(PriorityTaskQueue priorityTaskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
-		 this.priorityTaskQueue = priorityTaskQueue;
-		 this.taskTimestampService = taskTimestampService;
-		 this.taskBasicService = taskBasicService;
-		 this.jmsTemplate = jmsTemplate;
+	public TaskDistributorThread(Config config,PriorityTaskQueue priorityTaskQueue,TaskBasicService taskBasicService,TaskTimestampService taskTimestampService,JmsTemplate jmsTemplate) {
+		this.config = config; 
+		this.priorityTaskQueue = priorityTaskQueue;
+		this.taskTimestampService = taskTimestampService;
+		this.taskBasicService = taskBasicService;
+		this.jmsTemplate = jmsTemplate;
+		this.activemqConnection = QueueConnectionFactory.createActiveMQConnection(config.getActivemq_url());
+		this.activemqSession = QueueConnectionFactory.createSession(activemqConnection);
 	}
 	
 	@Override
@@ -120,13 +129,15 @@ public class TaskDistributorThread implements Runnable {
 	 */
 	private boolean addToDistributeTaskQueue(Task task) throws InterruptedException {
 		//确定distributeTaskQueue名称，例如：192.168.2.91:7000:distributeTaskQueue
-		distributeTaskQueue = task.getExecutorId() + ":" + "distributeTaskQueue";
+		String distributeTaskQueue = task.getExecutorId() + ":" + "distributeTaskQueue";
 		try
 		{
+			taskProducer = QueueConnectionFactory.createProducer(activemqSession, distributeTaskQueue);
 			//将task发送到distributeTaskQueue中
-			ActiveMQUtils.sendTask(jmsTemplate, distributeTaskQueue, task, task.getTaskPriority().getValue());
+//			ActiveMQUtils.sendTask(jmsTemplate, distributeTaskQueue, task, task.getTaskPriority().getValue());
+			ActiveMQUtils_nospring.sendTask(task, activemqSession, taskProducer, distributeTaskQueue, task.getTaskPriority().getValue());
 		}
-		catch(JmsException jmsException)
+		catch(JMSException jmsException)
 		{
 			LOGGER.error("Task [ " + task.getTaskId() + " ] 放入队列distributeTaskQueue失败！" + jmsException.getMessage());
 			throw new InterruptedException("Task [ " + task.getTaskId() + " ] 放入队列distributeTaskQueue失败！" + jmsException.getMessage());

@@ -1,18 +1,12 @@
 package com.YYSchedule.task.monitor;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import javax.jms.JMSException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import com.YYSchedule.common.pojo.NodeItem;
-import com.YYSchedule.common.pojo.Task;
-import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.queue.PriorityTaskQueue;
@@ -67,30 +61,30 @@ public class NodeOffLineMonitor
 		boolean isCleared = false;
 		String queue = node.getNodeId() + ":distributeTaskQueue";
 		boolean isRemoved = nodeMapper.removeNode(node);
-		if (isRemoved)
-		{
-			Set<Task> taskSet = new HashSet<Task>();
-			while (true)
-			{
-				Task task = new Task();
-				try
-				{
-					task = ActiveMQUtils.receiveTask(jmsTemplate, queue);
-					
-					if (task == null)
-						break;
-	
-					taskSet.add(task);
-				} catch (JMSException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			priorityTaskQueue.addToPriorityTaskQueue(taskSet);
-			
-			isCleared = true;
-		}
+//		if (isRemoved)
+//		{
+//			Set<Task> taskSet = new HashSet<Task>();
+//			while (true)
+//			{
+//				Task task = new Task();
+//				try
+//				{
+//					task = ActiveMQUtils.receiveTask(jmsTemplate, queue);
+//					
+//					if (task == null)
+//						break;
+//	
+//					taskSet.add(task);
+//				} catch (JMSException e)
+//				{
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//			priorityTaskQueue.addToPriorityTaskQueue(taskSet);
+//			
+//			isCleared = true;
+//		}
 		
 		return isCleared;
 	}

@@ -30,7 +30,7 @@
 //	public void test()
 //	{
 //		RedisTemplate redisTemplate = applicationContext.getBean(RedisTemplate.class);
-//		String string = RedisUtils.get(redisTemplate, "VIRUSTOTAL");
+//		String string = RedisUtils.get(redisTemplate, "anzhi");
 //		System.out.println(string);
 //	}
 //}

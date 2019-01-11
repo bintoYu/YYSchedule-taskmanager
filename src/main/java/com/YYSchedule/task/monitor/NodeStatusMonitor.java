@@ -3,12 +3,8 @@
  */
 package com.YYSchedule.task.monitor;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.NavigableSet;
-import java.util.Set;
-
-import javax.jms.JMSException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
-import com.YYSchedule.common.mybatis.pojo.Node;
 import com.YYSchedule.common.pojo.NodeItem;
 import com.YYSchedule.common.pojo.ResultStatus;
-import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.store.service.NodeService;
-import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.mapper.ResultStatusMapper;
@@ -91,10 +84,12 @@ public class NodeStatusMonitor
 						LOGGER.info("将任务节点 [ " + nodeItem.getNodeId() + " ] 标记为已损坏.");
 					}
 					
-					if(nodeItem.isBroken())
-					{
-						addToPriorityTaskQueue(nodeItem.getNodeId());
-					}
+					//失败回滚
+//					if(nodeItem.isBroken())
+//					{
+//						addToPriorityTaskQueue(nodeItem.getNodeId());
+//					}
+					
 //					// 保存node,每监听15次存一次库
 //					// 当任务节点损坏时，立即保存该任务节点状态
 //					if(count % 3 == 0 || nodeItem.isBroken())
@@ -108,30 +103,30 @@ public class NodeStatusMonitor
 		}
 	}
 	
-	private void addToPriorityTaskQueue(String nodeId)
-	{
-
-		String queue = nodeId + ":distributeTaskQueue";
-		Set<Task> taskSet = new HashSet<Task>();
-		while (true)
-		{
-			Task task = new Task();
-			try
-			{
-				task = ActiveMQUtils.receiveTask(jmsTemplate, queue);
-				
-				if (task == null)
-					break;
-
-				taskSet.add(task);
-			} catch (JMSException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		priorityTaskQueue.addToPriorityTaskQueue(taskSet);
-	}
+//	private void addToPriorityTaskQueue(String nodeId)
+//	{
+//
+//		String queue = nodeId + ":distributeTaskQueue";
+//		Set<Task> taskSet = new HashSet<Task>();
+//		while (true)
+//		{
+//			Task task = new Task();
+//			try
+//			{
+//				task = ActiveMQUtils.receiveTask(jmsTemplate, queue);
+//				
+//				if (task == null)
+//					break;
+//
+//				taskSet.add(task);
+//			} catch (JMSException e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		priorityTaskQueue.addToPriorityTaskQueue(taskSet);
+//	}
 	
 	
 //	private Node getNode(NodeItem nodeItem, int successNum, int taskNum)

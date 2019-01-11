@@ -36,6 +36,9 @@ public class Config
 	@Value("#{config.node_success_rate}")
 	private double node_success_rate;
 	
+	@Value("#{config.activemq_url}")
+	private String activemq_url;
+	
 	public String getTaskmanager_ip()
 	{
 		return taskmanager_ip;
@@ -86,4 +89,10 @@ public class Config
 		return node_success_rate;
 	}
 
+	public String getActivemq_url()
+	{
+		return activemq_url;
+	}
+
+	
 }

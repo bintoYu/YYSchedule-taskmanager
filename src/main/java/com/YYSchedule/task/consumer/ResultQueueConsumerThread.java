@@ -4,11 +4,12 @@
 package com.YYSchedule.task.consumer;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Date;
 
+import javax.jms.Connection;
 import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.Session;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
@@ -32,7 +33,8 @@ import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskFileService;
 import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTimestampService;
-import com.YYSchedule.store.util.ActiveMQUtils;
+import com.YYSchedule.store.util.ActiveMQUtils_nospring;
+import com.YYSchedule.store.util.QueueConnectionFactory;
 import com.YYSchedule.store.util.RedisUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.ResultStatusMapper;
@@ -70,6 +72,12 @@ public class ResultQueueConsumerThread implements Runnable
 	
 	private FailureResultQueue failureResultQueue;
 	
+	//activemq
+	private Connection activemqConnection;
+	private Session activemqSession;
+	private MessageConsumer consumer;
+	private String resultQueue;
+	
 	/**
 	 * @param jmsTemplate
 	 * @param config
@@ -89,22 +97,25 @@ public class ResultQueueConsumerThread implements Runnable
 		this.jobBasicService = jobBasicService;
 		this.resultStatusMapper = resultStatusMapper;
 		this.failureResultQueue = failureResultQueue;
+		this.resultQueue = config.getTaskmanager_ip() + ":" + "resultQueue";
+		this.activemqConnection = QueueConnectionFactory.createActiveMQConnection(config.getActivemq_url());
+		this.activemqSession = QueueConnectionFactory.createSession(activemqConnection);
+		this.consumer = QueueConnectionFactory.createConsumer(activemqSession, resultQueue);
 	}
 	
 	@Override
 	public void run()
 	{	
-		String resultQueue = config.getTaskmanager_ip() + ":" + "resultQueue";
-		LOGGER.info("开启队列:" + resultQueue);
-		
+		LOGGER.info("开启线程" + Thread.currentThread().getName() + "..........");		
 		while (!Thread.currentThread().isInterrupted())
 		{
 			Result result = null;
 			try
 			{
 				LOGGER.info(new Date().toString() + "\t" + resultQueue);
-				// 从队列distributeTaskQueue取出task
-				result = ActiveMQUtils.receiveResult(jmsTemplate, resultQueue);
+				// 从队列resultQueue取出task
+//				result = ActiveMQUtils.receiveResult(jmsTemplate, resultQueue);
+				result = ActiveMQUtils_nospring.receiveResult(consumer, resultQueue);
 			} catch (JMSException e)
 			{
 				LOGGER.error("从队列" + resultQueue + "取result失败！" + e.getMessage());

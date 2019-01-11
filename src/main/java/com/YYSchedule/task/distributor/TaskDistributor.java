@@ -32,7 +32,7 @@ public class TaskDistributor
 		
 		for(int i = 0; i < distribute_thread_num; i++)
 		{
-			TaskDistributorThread distributeTaskQueueThread = new TaskDistributorThread(taskQueue,taskBasicService,taskTimestampService,jmsTemplate);
+			TaskDistributorThread distributeTaskQueueThread = new TaskDistributorThread(config,taskQueue,taskBasicService,taskTimestampService,jmsTemplate);
 			threadPoolExecutor.execute(distributeTaskQueueThread);
 		}
 	}
