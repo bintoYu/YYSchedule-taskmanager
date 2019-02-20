@@ -24,7 +24,7 @@ public class JobSplitter
 	 * @param job
 	 * @return
 	 */
-	public static List<Task> split(Job job,int userId) {
+	public static List<Task> split(Job job) {
 		
 		LOGGER.info("开始将job切分成task, jobId: " + job.getJobId());
 		

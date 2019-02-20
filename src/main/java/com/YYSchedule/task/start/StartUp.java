@@ -8,14 +8,13 @@ import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.YYSchedule.common.rpc.service.task.NodeCallTaskService;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.config.Config;
+import com.YYSchedule.task.consumer.JobConsumerPool;
 import com.YYSchedule.task.consumer.ResultQueueConsumerPool;
-import com.YYSchedule.task.distributor.TaskDistributorPool;
 import com.YYSchedule.task.mapper.JobMapperProducer;
 import com.YYSchedule.task.mapper.MissionMapperProducer;
 import com.YYSchedule.task.service.impl.NodeCallTaskServiceImpl;
@@ -38,7 +37,8 @@ public class StartUp
 	
 	public void startQueueThread()
 	{
-		applicationContext.getBean(TaskDistributorPool.class).startThreadPool();
+//		applicationContext.getBean(TaskDistributorPool.class).startThreadPool();
+		applicationContext.getBean(JobConsumerPool.class).startThreadPool();
 		applicationContext.getBean(ResultQueueConsumerPool.class).startThreadPool();
 	}
 	

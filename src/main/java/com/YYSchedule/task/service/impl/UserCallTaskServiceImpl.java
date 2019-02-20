@@ -2,25 +2,16 @@ package com.YYSchedule.task.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 
-import com.YYSchedule.common.mybatis.pojo.JobBasic;
 import com.YYSchedule.common.mybatis.pojo.MissionBasic;
-import com.YYSchedule.common.mybatis.pojo.MissionJob;
-import com.YYSchedule.common.mybatis.pojo.TaskBasic;
-import com.YYSchedule.common.mybatis.pojo.TaskFile;
-import com.YYSchedule.common.mybatis.pojo.TaskTemp;
-import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
 import com.YYSchedule.common.mybatis.pojo.UserBasic;
 import com.YYSchedule.common.pojo.NodeItem;
-import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.common.rpc.domain.job.Job;
 import com.YYSchedule.common.rpc.domain.job.JobPriority;
 import com.YYSchedule.common.rpc.domain.mission.Mission;
@@ -32,20 +23,13 @@ import com.YYSchedule.common.rpc.exception.TimeoutException;
 import com.YYSchedule.common.rpc.exception.UnavailableException;
 import com.YYSchedule.common.rpc.service.task.UserCallTaskService;
 import com.YYSchedule.common.utils.Bean2BeanUtils;
-import com.YYSchedule.store.service.JobBasicService;
 import com.YYSchedule.store.service.MissionBasicService;
-import com.YYSchedule.store.service.MissionJobService;
-import com.YYSchedule.store.service.TaskBasicService;
-import com.YYSchedule.store.service.TaskFileService;
-import com.YYSchedule.store.service.TaskTempService;
-import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.store.service.UserBasicService;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.JobMapper;
 import com.YYSchedule.task.mapper.MissionMapper;
 import com.YYSchedule.task.mapper.NodeItemMapper;
-import com.YYSchedule.task.queue.PriorityTaskQueue;
-import com.YYSchedule.task.splitter.JobSplitter;
+import com.YYSchedule.task.queue.JobQueue;
 
 /**
  * @author ybt
@@ -81,13 +65,7 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 		MissionMapper missionMapper = applicationContext.getBean(MissionMapper.class);
 		JobMapper jobMapper = applicationContext.getBean(JobMapper.class);
 		MissionBasicService missionBasicService = applicationContext.getBean(MissionBasicService.class);
-		JobBasicService jobBasicService = applicationContext.getBean(JobBasicService.class);
-		MissionJobService missionJobService = applicationContext.getBean(MissionJobService.class);
-		TaskBasicService taskBasicService = applicationContext.getBean(TaskBasicService.class);
-		TaskTimestampService taskTimestampService = applicationContext.getBean(TaskTimestampService.class);
-		TaskFileService taskFileService = applicationContext.getBean(TaskFileService.class);
-		TaskTempService taskTempService = applicationContext.getBean(TaskTempService.class);
-		PriorityTaskQueue priorityTaskQueue = applicationContext.getBean(PriorityTaskQueue.class);
+		JobQueue jobQueue = applicationContext.getBean(JobQueue.class);
 		
 		//生成missionId，并且将missionBasic信息存入数据库中
 		int missionId = missionMapper.generateMissionId(mission.getUserId());
@@ -106,43 +84,7 @@ public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 			long jobId = jobMapper.generateJobId(missionId);
 			job.setJobId(jobId);
 			
-			//将job切分成task，并存入数据库
-			List<Task> taskList = new ArrayList<>();
-			List<TaskBasic> taskBasicList;
-			List<TaskFile> taskFileList;
-			List<TaskTimestamp> taskTimestampList;
-			List<TaskTemp> taskTempList; 
-			taskList = JobSplitter.split(job,  mission.getUserId());
-			taskBasicList = Bean2BeanUtils.taskList2TaskBasicList(taskList);
-			taskFileList = Bean2BeanUtils.taskList2TaskFileList(taskList);
-			taskTimestampList = Bean2BeanUtils.taskList2TaskTimestampList(taskList);
-			taskTempList = Bean2BeanUtils.taskList2TaskTempList(taskList);
-			
-			taskBasicService.insertTaskBasicList(taskBasicList);
-			taskFileService.insertTaskFileList(taskFileList);
-			taskTimestampService.insertTaskTimestampList(taskTimestampList);
-			taskTempService.insertTaskTempList(taskTempList);
-			
-			//将taskList放入PriorityTaskQueue中
-			Set<Task> taskSet = new HashSet<Task>();
-			taskSet.addAll(taskList);
-			priorityTaskQueue.addToPriorityTaskQueue(taskSet);
-			
-			//最后存储job的信息
-			JobBasic jobBasic = Bean2BeanUtils.Job2JobBasic(job,taskList.size());
-			try
-			{
-				jobBasicService.insertJobBasic(jobBasic);
-				
-				//将missionId-jobId对应关系存入数据库
-				MissionJob missionJob = new MissionJob();
-				missionJob.setMissionId(missionId);
-				missionJob.setJobId(jobId);
-				missionJobService.insertMissionJob(missionJob);
-			}catch(Exception e) {
-				LOGGER.error("无法将jobBasic存入数据库: " + jobBasic +  " : " + e.getMessage(), e);
-				throw new UnavailableException("无法将jobBasic存入数据库: " + jobBasic +  " : " + e.getMessage());
-			} 
+			jobQueue.add(job);
 			
 		}
 		return missionId;

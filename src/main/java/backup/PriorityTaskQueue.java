@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.YYSchedule.task.queue;
+package backup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class PriorityTaskQueue
 		return priorityTaskQueue;
 	}
 	
-	public synchronized void addToPriorityTaskQueue(Task task)
+	public void addToPriorityTaskQueue(Task task)
 	{
 		if(task == null)
 		{
@@ -55,7 +55,7 @@ public class PriorityTaskQueue
 		}
 	}
 	
-	public synchronized void addToPriorityTaskQueue(Set<Task> taskSet)
+	public void addToPriorityTaskQueue(Set<Task> taskSet)
 	{
 		if(taskSet.isEmpty())
 		{
@@ -76,7 +76,7 @@ public class PriorityTaskQueue
 		}
 	}
 	
-	public synchronized List<Long> getTaskIdList()
+	public List<Long> getTaskIdList()
 	{
 		List<Long> taskIdList = new ArrayList<Long>();
 		for (Task task : priorityTaskQueue)

@@ -18,7 +18,7 @@ import com.YYSchedule.store.service.NodeService;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.mapper.ResultStatusMapper;
-import com.YYSchedule.task.queue.PriorityTaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskPool;
 
 /**
  * @author ybt
@@ -35,7 +35,7 @@ public class NodeStatusMonitor
 	private JmsTemplate jmsTemplate;
 	
 	@Autowired
-	private PriorityTaskQueue priorityTaskQueue;
+	private PriorityTaskPool taskPool;
 	
 	@Autowired
 	private NodeService nodeService;
@@ -84,10 +84,10 @@ public class NodeStatusMonitor
 						LOGGER.info("将任务节点 [ " + nodeItem.getNodeId() + " ] 标记为已损坏.");
 					}
 					
-					//失败回滚
+					//将“损坏”的节点中剩余的任务取出，扔回缓存池中
 //					if(nodeItem.isBroken())
 //					{
-//						addToPriorityTaskQueue(nodeItem.getNodeId());
+//						addToTaskPool(nodeItem.getNodeId());
 //					}
 					
 //					// 保存node,每监听15次存一次库
@@ -103,11 +103,11 @@ public class NodeStatusMonitor
 		}
 	}
 	
-//	private void addToPriorityTaskQueue(String nodeId)
+//	private void addToTaskPool(String nodeId)
 //	{
 //
 //		String queue = nodeId + ":distributeTaskQueue";
-//		Set<Task> taskSet = new HashSet<Task>();
+//		List<Task> taskList = new ArrayList<Task>();
 //		while (true)
 //		{
 //			Task task = new Task();
@@ -118,14 +118,14 @@ public class NodeStatusMonitor
 //				if (task == null)
 //					break;
 //
-//				taskSet.add(task);
+//				taskList.add(task);
 //			} catch (JMSException e)
 //			{
 //				e.printStackTrace();
 //			}
 //		}
 //		
-//		priorityTaskQueue.addToPriorityTaskQueue(taskSet);
+//		taskPool.add(taskList);
 //	}
 	
 	

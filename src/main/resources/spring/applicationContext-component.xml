@@ -19,10 +19,10 @@
 	<util:properties id="config" location="classpath:properties/config.properties"/>
 	
 	<bean id="threadPoolExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="${cool_pool_size}" />
+		<property name="corePoolSize" value="${core_pool_size}" />
 		<property name="keepAliveSeconds" value="${keep_alive_seconds}" />
 		<property name="maxPoolSize" value="${max_pool_size}" />
-		<property name="queueCapacity" value="20" />
+		<property name="queueCapacity" value="#{config.queue_capacity}" />
 		<property name="rejectedExecutionHandler">
 			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
 		</property>

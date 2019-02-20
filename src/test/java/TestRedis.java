@@ -30,7 +30,15 @@
 //	public void test()
 //	{
 //		RedisTemplate redisTemplate = applicationContext.getBean(RedisTemplate.class);
-//		String string = RedisUtils.get(redisTemplate, "anzhi");
+//		String string = RedisUtils.get(redisTemplate, "test");
 //		System.out.println(string);
+//	}
+//	
+//	@Test
+//	public void testSet()
+//	{
+//		RedisTemplate<String,String> redisTemplate = applicationContext.getBean(RedisTemplate.class);
+//		boolean result = RedisUtils.set(redisTemplate, "test","haha");
+//		System.out.println(result);
 //	}
 //}

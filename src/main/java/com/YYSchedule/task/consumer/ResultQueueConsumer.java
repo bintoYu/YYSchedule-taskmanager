@@ -33,8 +33,7 @@ import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskFileService;
 import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTimestampService;
-import com.YYSchedule.store.util.ActiveMQUtils_nospring;
-import com.YYSchedule.store.util.QueueConnectionFactory;
+import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.store.util.RedisUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.ResultStatusMapper;
@@ -98,9 +97,9 @@ public class ResultQueueConsumer implements Runnable
 		this.resultStatusMapper = resultStatusMapper;
 		this.failureResultQueue = failureResultQueue;
 		this.resultQueue = config.getTaskmanager_ip() + ":" + "resultQueue";
-		this.activemqConnection = QueueConnectionFactory.createActiveMQConnection(config.getActivemq_url());
-		this.activemqSession = QueueConnectionFactory.createSession(activemqConnection);
-		this.consumer = QueueConnectionFactory.createConsumer(activemqSession, resultQueue);
+//		this.activemqConnection = QueueConnectionFactory.createActiveMQConnection(config.getActivemq_url());
+//		this.activemqSession = QueueConnectionFactory.createSession(activemqConnection);
+//		this.consumer = QueueConnectionFactory.createConsumer(activemqSession, resultQueue);
 	}
 	
 	@Override
@@ -113,18 +112,16 @@ public class ResultQueueConsumer implements Runnable
 			Result result = null;
 			try
 			{
-				LOGGER.info(new Date().toString() + "\t" + resultQueue);
+//				LOGGER.info(new Date().toString() + "\t" + resultQueue);
 				// 从队列resultQueue取出task
-//				result = ActiveMQUtils.receiveResult(jmsTemplate, resultQueue);
-				result = ActiveMQUtils_nospring.receiveResult(consumer, resultQueue);
+				result = ActiveMQUtils.receiveResult(jmsTemplate, resultQueue);
+//				result = ActiveMQUtils_nospring.receiveResult(consumer, resultQueue);
 			} catch (JMSException e)
 			{
 				LOGGER.error("从队列" + resultQueue + "取result失败！" + e.getMessage());
 			}
 			if (result != null)
 			{
-				LOGGER.info("已从队列" + resultQueue + "中取出result [ " + result.getTaskId() + " ] ");
-				
 				// 更新数据库
 				updateDatabase(result);
 				// 将成功或失败结果放入结果状态统计模块中
@@ -134,11 +131,13 @@ public class ResultQueueConsumer implements Runnable
 				// 成功：将result发送到redis中,并且将ftp上的文件删除
 				if (result.getTaskStatus() == TaskStatus.FINISHED)
 				{
+					LOGGER.info("已从队列" + resultQueue + "中取出result [ " + result.getTaskId() + " ] ");
 					deleteFromftp(result);
 					RedisUtils.set(redisTemplate,result.getTaskPhase().toString(), result.getResult());
 				}
 				else
 				{
+					LOGGER.info("已从队列" + resultQueue + "中取出失败任务 [ " + result.getTaskId() + " ] ");
 					// 失败，将result存到FailureResultQueue中
 //					failureResultQueue.addToFailureResultQueue(result);
 				}

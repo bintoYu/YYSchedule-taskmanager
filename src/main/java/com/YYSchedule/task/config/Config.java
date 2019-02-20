@@ -21,6 +21,9 @@ public class Config
 	@Value("#{config.node_call_task_port}")
 	private int node_call_task_port;
 
+	@Value("#{config.job_consumer_thread_num}")
+	private int job_consumer_thread_num ;
+	
 	@Value("#{config.distributor_thread_num}")
 	private int distributor_thread_num;
 	
@@ -67,6 +70,11 @@ public class Config
 	public int getNode_call_task_port()
 	{
 		return node_call_task_port;
+	}
+	
+	public int getJob_consumer_thread_num()
+	{
+		return job_consumer_thread_num;
 	}
 
 	public int getResult_consumer_thread_num()

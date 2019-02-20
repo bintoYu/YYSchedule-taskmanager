@@ -11,7 +11,7 @@ import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.queue.FailureResultQueue;
-import com.YYSchedule.task.queue.PriorityTaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskPool;
 
 /**
  * @author ybt
@@ -35,7 +35,7 @@ public class FailureResultConsumerPool
 	private FailureResultQueue failureResultQueue;
 	
 	@Autowired
-	private PriorityTaskQueue priorityTaskQueue;
+	private PriorityTaskPool taskPool;
 	
 	@Autowired
 	private ThreadPoolTaskExecutor threadPoolExecutor;
@@ -46,7 +46,7 @@ public class FailureResultConsumerPool
 		
 		for(int i = 0; i < task_consumer_thread_num; i++)
 		{
-			FailureResultConsumer failureResultConsumerThread = new FailureResultConsumer(taskBasicService, taskTempService, failureResultQueue, priorityTaskQueue);
+			FailureResultConsumer failureResultConsumerThread = new FailureResultConsumer(taskBasicService, taskTempService, failureResultQueue, taskPool);
 			threadPoolExecutor.execute(failureResultConsumerThread);
 		}
 	}

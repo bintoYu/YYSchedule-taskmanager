@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.YYSchedule.common.pojo.NodeItem;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.mapper.NodeItemMapper;
-import com.YYSchedule.task.queue.PriorityTaskQueue;
+import com.YYSchedule.task.queue.PriorityTaskPool;
 
 /**
  * @author ybt
@@ -27,7 +27,7 @@ public class NodeOffLineMonitor
 	private NodeItemMapper nodeMapper;
 	
 	@Autowired
-	private PriorityTaskQueue priorityTaskQueue;
+	private PriorityTaskPool taskPool;
 	
 	@Autowired
 	private Config config;
@@ -54,7 +54,7 @@ public class NodeOffLineMonitor
 	/**
 	 * 清理的过程包括, 
 	 * 1、将mapper里面的node元素进行移除 
-	 * 2、将node的队列信息取出来，重新扔到priorityTaskQueue中
+	 * 2、将node的队列信息取出来，重新扔到priorityTaskPool中
 	 */
 	public boolean clear(NodeItem node)
 	{
