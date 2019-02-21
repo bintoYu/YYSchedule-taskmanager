@@ -35,7 +35,7 @@ public class NodeStatusMonitor
 	private JmsTemplate jmsTemplate;
 	
 	@Autowired
-	private PriorityTaskPool taskPool;
+	private PriorityTaskPool priorityTaskPool;
 	
 	@Autowired
 	private NodeService nodeService;

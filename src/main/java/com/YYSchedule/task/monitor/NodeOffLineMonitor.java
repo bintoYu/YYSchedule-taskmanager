@@ -27,7 +27,7 @@ public class NodeOffLineMonitor
 	private NodeItemMapper nodeMapper;
 	
 	@Autowired
-	private PriorityTaskPool taskPool;
+	private PriorityTaskPool priorityTaskPool;
 	
 	@Autowired
 	private Config config;

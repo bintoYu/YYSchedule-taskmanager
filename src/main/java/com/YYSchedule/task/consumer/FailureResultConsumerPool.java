@@ -35,7 +35,7 @@ public class FailureResultConsumerPool
 	private FailureResultQueue failureResultQueue;
 	
 	@Autowired
-	private PriorityTaskPool taskPool;
+	private PriorityTaskPool priorityTaskPool;
 	
 	@Autowired
 	private ThreadPoolTaskExecutor threadPoolExecutor;
@@ -46,7 +46,7 @@ public class FailureResultConsumerPool
 		
 		for(int i = 0; i < task_consumer_thread_num; i++)
 		{
-			FailureResultConsumer failureResultConsumerThread = new FailureResultConsumer(taskBasicService, taskTempService, failureResultQueue, taskPool);
+			FailureResultConsumer failureResultConsumerThread = new FailureResultConsumer(taskBasicService, taskTempService, failureResultQueue, priorityTaskPool);
 			threadPoolExecutor.execute(failureResultConsumerThread);
 		}
 	}

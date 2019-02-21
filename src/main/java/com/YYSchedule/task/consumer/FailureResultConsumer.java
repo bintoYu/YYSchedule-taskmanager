@@ -14,6 +14,7 @@ import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.task.queue.FailureResultQueue;
 import com.YYSchedule.task.queue.PriorityTaskPool;
+import com.YYSchedule.task.queue.TaskPool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 
@@ -33,16 +34,16 @@ public class FailureResultConsumer implements Runnable
 	
 	private FailureResultQueue failureResultQueue;
 	
-	private PriorityTaskPool taskPool;
+	private PriorityTaskPool priorityTaskPool;
 	
 	/**
 	 * @param jmsTemplate
 	 * @param config
 	 */
-	public FailureResultConsumer(TaskBasicService taskBasicService,TaskTempService taskTempService,FailureResultQueue failureResultQueue, PriorityTaskPool taskPool)
+	public FailureResultConsumer(TaskBasicService taskBasicService,TaskTempService taskTempService,FailureResultQueue failureResultQueue, PriorityTaskPool priorityTaskPool)
 	{
 		this.taskBasicService = taskBasicService;
-		this.taskPool = taskPool;
+		this.priorityTaskPool = priorityTaskPool;
 		this.failureResultQueue = failureResultQueue;
 		this.taskTempService = taskTempService;
 	}
@@ -67,8 +68,8 @@ public class FailureResultConsumer implements Runnable
 					Task task = getTask(result.getTaskId());
 					if (task != null)
 					{
-						// 把task放到priorityTaskQueue中
-						taskPool.add(task);
+						// 把task放到priorityTaskPool中
+						priorityTaskPool.add(task);
 					}
 				}
 			}

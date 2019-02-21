@@ -35,6 +35,7 @@ import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.queue.PriorityTaskPool;
+import com.YYSchedule.task.queue.TaskPool;
 
 /**
  * @author ybt
@@ -104,7 +105,7 @@ public class NodeCallTaskServiceImpl implements NodeCallTaskService.Iface
 		// 如果任务数小于缓存队列长度，则尝试获取任务并发送到activemq中。
 		if (!nodeItem.isBroken() && nodeItem.getQueueLength() < nodeItem.getQueueLimit())
 		{
-			List<Task> list = taskPool.get(nodeItem.getQueueLimit());
+			List<Task> list = taskPool.get(nodeItem.getTaskPhase(), nodeItem.getQueueLimit());
 			if (!list.isEmpty())
 			{
 				LOGGER.info(nodeItem.getNodeId() + "[QueueLength:" + nodeItem.getQueueLength() + ", QueueLimit:" + nodeItem.getQueueLimit() + "]");

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.YYSchedule.store.service.JobBasicService;
 import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskFileService;
-import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.store.service.TaskTimestampService;
 import com.YYSchedule.task.config.Config;

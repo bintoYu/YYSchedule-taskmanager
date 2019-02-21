@@ -4,15 +4,12 @@
 package com.YYSchedule.task.consumer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.ibatis.session.SqlSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.YYSchedule.common.mybatis.pojo.JobBasic;
 import com.YYSchedule.common.mybatis.pojo.TaskBasic;
@@ -21,20 +18,16 @@ import com.YYSchedule.common.mybatis.pojo.TaskTemp;
 import com.YYSchedule.common.mybatis.pojo.TaskTimestamp;
 import com.YYSchedule.common.pojo.Task;
 import com.YYSchedule.common.rpc.domain.job.Job;
-import com.YYSchedule.common.rpc.exception.UnavailableException;
 import com.YYSchedule.common.utils.Bean2BeanUtils;
 import com.YYSchedule.store.service.JobBasicService;
 import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskFileService;
-import com.YYSchedule.store.service.TaskResultService;
 import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.store.service.TaskTimestampService;
-import com.YYSchedule.store.util.RedisUtils;
 import com.YYSchedule.task.config.Config;
 import com.YYSchedule.task.queue.JobQueue;
 import com.YYSchedule.task.queue.PriorityTaskPool;
 import com.YYSchedule.task.splitter.JobSplitter;
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * @author ybt

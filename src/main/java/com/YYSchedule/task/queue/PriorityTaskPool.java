@@ -20,6 +20,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.YYSchedule.common.pojo.Task;
+import com.YYSchedule.common.pojo.TaskPoolPojo;
+import com.YYSchedule.common.rpc.domain.task.TaskPhase;
 import com.YYSchedule.store.util.RedisUtils;
 import com.alibaba.fastjson.JSONObject;
 
@@ -35,41 +37,45 @@ public class PriorityTaskPool
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PriorityTaskPool.class);
 	
-	private static final int[] nums = {9,6,4,2,0};
-	
-	//记录池中任务总数量
-	private AtomicInteger poolSize = new AtomicInteger(0);		
-
-	//记录池中每个优先级队列的容量
-	private Map<Integer,AtomicInteger> queueSizeMap = new ConcurrentHashMap<>();
-	
 	@Autowired
 	@Qualifier("jedisTemplate")
 	public RedisTemplate<String,String> redisTemplate;
 	
+	private static final int[] nums = {9,6,4,2,0};
+	
+	private Map<TaskPhase,TaskPoolPojo> map = new ConcurrentHashMap<>();
 
 	//初始化 poolSize和queueSizeMap
     @PostConstruct
     public void init() {
     	LOGGER.info("开始初始化task缓存池");
-    	for(int i = 0; i < nums.length; i++)
+    	//每个类型的缓存池都要分别建好
+    	for(TaskPhase taskPhase : TaskPhase.values())
     	{
-    		int size = RedisUtils.size(redisTemplate, "taskPool:"+nums[i]);
-    		queueSizeMap.put(nums[i], new AtomicInteger(size));
-    		poolSize.addAndGet(size);
-    		LOGGER.info("优先级[" + nums[i] + "] 容量为：" + size);
+    		TaskPoolPojo taskPool = new TaskPoolPojo();
+    		//统计每个优先级队列的个数
+	    	for(int i = 0; i < nums.length; i++)
+	    	{
+	    		int size = RedisUtils.size(redisTemplate, taskPhase + "-TaskPool:"+nums[i]);
+	    		taskPool.getQueueSizeMap().put(nums[i], new AtomicInteger(size));
+	    		taskPool.getPoolSize().addAndGet(size);
+	    		if(size != 0)
+	    			LOGGER.info("类型[" + taskPhase + "]\t" + "优先级[" + nums[i] + "] 容量为：" + size);
+	    	}
+	    	map.put(taskPhase, taskPool);
+			LOGGER.info("完成对类型[" + taskPhase + "]的初始化！ 总数为：" + taskPool.getPoolSize().get());
     	}
-		LOGGER.info("完成对task缓存池的初始化！ 总数为：" + poolSize.get());
     }
 	
 	
 	public boolean add(Task task)
 	{
 		String taskJson = JSONObject.toJSONString(task);
-		if(RedisUtils.set(redisTemplate, "taskPool:" + task.getTaskPriority().getValue(), taskJson))
+		if(RedisUtils.set(redisTemplate, task.getTaskPhase() + "-TaskPool:" + task.getTaskPriority().getValue(), taskJson))
 		{
-			queueSizeMap.get(task.getTaskPriority().getValue()).incrementAndGet();
-			poolSize.incrementAndGet();
+			TaskPoolPojo taskPool = map.get(task.getTaskPhase());
+			taskPool.getQueueSizeMap().get(task.getTaskPriority().getValue()).incrementAndGet();
+			taskPool.getPoolSize().incrementAndGet();
 			return true;
 		}
 		
@@ -82,31 +88,34 @@ public class PriorityTaskPool
 		for (Task task : taskList)
 		{
 			String taskJson = JSONObject.toJSONString(task);
-			if(RedisUtils.set(redisTemplate, "taskPool:" + task.getTaskPriority().getValue(), taskJson))
+			if(RedisUtils.set(redisTemplate, task.getTaskPhase() + "-TaskPool:" + task.getTaskPriority().getValue(), taskJson))
 			{
 				ret++;
-				queueSizeMap.get(task.getTaskPriority().getValue()).incrementAndGet();
+				TaskPoolPojo taskPool = map.get(task.getTaskPhase());
+				taskPool.getQueueSizeMap().get(task.getTaskPriority().getValue()).incrementAndGet();
+				taskPool.getPoolSize().incrementAndGet();
 			}
 		}
 		
-		poolSize.addAndGet(ret);
 		return ret;
 	}
 	
 	/**
+	 * 如果高优先级队列为空，则不再去请求获取（队列的长度已加载到内存中，获取时间更短），直接尝试访问下一优先级队列
 	 * 从池中获取一个task
 	 * @return
 	 */
-	public synchronized Task get()
+	public synchronized Task get(TaskPhase taskPhase)
 	{
+		TaskPoolPojo taskPool = map.get(taskPhase);
     	for(int i = 0; i < nums.length; i++)
     	{
-    		if(queueSizeMap.get(nums[i]).get() > 0)
+    		if(taskPool.getQueueSizeMap().get(nums[i]).get() > 0)
     		{
-    			String taskJson = RedisUtils.get(redisTemplate, "taskPool:" + nums[i]);
+    			String taskJson = RedisUtils.get(redisTemplate, taskPhase + "-TaskPool:" + nums[i]);
     			Task task = JSONObject.parseObject(taskJson,Task.class);
-    			queueSizeMap.get(nums[i]).decrementAndGet();
-    			poolSize.decrementAndGet();
+    			taskPool.getQueueSizeMap().get(nums[i]).decrementAndGet();
+    			taskPool.getPoolSize().decrementAndGet();
     			return task;
     		}
     	}
@@ -119,17 +128,18 @@ public class PriorityTaskPool
 	 * @param num
 	 * @return
 	 */
-	public synchronized List<Task> get(int num)
+	public synchronized List<Task> get(TaskPhase taskPhase,int num)
 	{
 		List<Task> list = new ArrayList<>();
+		TaskPoolPojo taskPool = map.get(taskPhase);
     	for(int i = 0; i < nums.length; i++)
     	{
-    		AtomicInteger atomicInteger = queueSizeMap.get(nums[i]);
+    		AtomicInteger atomicInteger = taskPool.getQueueSizeMap().get(nums[i]);
     		while(atomicInteger.get() > 0)
     		{
     			if(list.size() == num)
     				break;
-    			String taskJson = RedisUtils.get(redisTemplate, "taskPool:" + nums[i]);
+    			String taskJson = RedisUtils.get(redisTemplate, taskPhase + "-TaskPool:" + nums[i]);
     			Task task = JSONObject.parseObject(taskJson,Task.class);
     			atomicInteger.decrementAndGet();
     			list.add(task);
@@ -138,22 +148,9 @@ public class PriorityTaskPool
 				break;
     	}
     	
-    	poolSize.getAndSet(poolSize.get() - list.size());
+    	taskPool.getPoolSize().getAndSet(taskPool.getPoolSize().get() - list.size());
     	return list;
 	}
 
-
-	public AtomicInteger getPoolSize()
-	{
-		return poolSize;
-	}
-
-
-	public Map<Integer, AtomicInteger> getQueueSizeMap()
-	{
-		return queueSizeMap;
-	}
-	
-	
 	
 }
