@@ -14,7 +14,6 @@ import com.YYSchedule.store.service.TaskBasicService;
 import com.YYSchedule.store.service.TaskTempService;
 import com.YYSchedule.task.queue.FailureResultQueue;
 import com.YYSchedule.task.queue.PriorityTaskPool;
-import com.YYSchedule.task.queue.TaskPool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 

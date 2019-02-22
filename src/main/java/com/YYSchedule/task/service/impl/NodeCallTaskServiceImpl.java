@@ -3,8 +3,6 @@
  */
 package com.YYSchedule.task.service.impl;
 
-import java.nio.ByteBuffer;
-import java.security.Timestamp;
 import java.util.List;
 
 import org.apache.thrift.TException;
@@ -35,7 +33,6 @@ import com.YYSchedule.store.util.ActiveMQUtils;
 import com.YYSchedule.task.applicationContext.ApplicationContextHandler;
 import com.YYSchedule.task.mapper.NodeItemMapper;
 import com.YYSchedule.task.queue.PriorityTaskPool;
-import com.YYSchedule.task.queue.TaskPool;
 
 /**
  * @author ybt

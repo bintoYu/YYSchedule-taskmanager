@@ -39,12 +39,10 @@ import com.YYSchedule.task.queue.JobQueue;
  */
 public class UserCallTaskServiceImpl implements UserCallTaskService.Iface
 {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(UserCallTaskServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserCallTaskServiceImpl.class);
 	
 	@Override
-	public String ping() throws UnavailableException, TimeoutException,
-			TException
+	public String ping() throws UnavailableException, TimeoutException, TException
 	{
 		return new Date().toString();
 	}
